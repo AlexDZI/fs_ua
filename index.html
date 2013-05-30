@@ -1,0 +1,380 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+
+<title>FS.ua</title>
+<link rel="stylesheet" type="text/css" href="CSS/Main.css"></link>
+<link rel="stylesheet" type="text/css" href="CSS/flags.css"></link>
+
+<script type="text/javascript" language="javascript" src="$MANAGER_WIDGET/Common/API/Plugin.js"></script>
+<script type="text/javascript" language="javascript" src="$MANAGER_WIDGET/Common/API/Widget.js"></script>
+<script type="text/javascript" language="javascript" src="$MANAGER_WIDGET/Common/API/Plugin.js"></script>
+<script type="text/javascript" language="javascript" src="$MANAGER_WIDGET/Common/API/TVKeyValue.js"></script>
+<script type="text/javascript" language="javascript" src="$MANAGER_WIDGET/Common/Util/Language.js"></script>
+<script type="text/javascript" language="javascript" src="$MANAGER_WIDGET/Common/Plugin/Define.js"></script>
+<script type="text/javascript" language="javascript" src="$MANAGER_WIDGET/Common/Util/Include.js"></script>
+
+<!-- 
+ <script type="text/javascript" language="javascript" src="$MANAGER_WIDGET/Common/af/2.0.0/loader.js"></script>
+
+
+<script type="text/javascript" language="javascript" src="$MANAGER_WIDGET/Common/API/CM_AVSetting.js"></script>
+  -->
+
+<script language="javascript" type="text/javascript" src="Javascript/Main.js"></script>
+<script language="javascript" type="text/javascript" src="Javascript/Search.js"></script>
+<script language="javascript" type="text/javascript" src="Javascript/URLtoXML.js"></script>
+<script language="javascript" type="text/javascript" src="javascript/Player.js"></script>
+<script language="javascript" type="text/javascript" src="javascript/Audio.js"></script>
+<script language="javascript" type="text/javascript" src="Javascript/Display.js"></script>
+<script language="javascript" type="text/javascript" src="Javascript/Favorites.js"></script>
+
+<OBJECT id="PluginSef" border="0" classid="clsid:SAMSUNG-INFOLINK-SEF"></object>
+<object id="pluginPlayer" border=0 classid="clsid:SAMSUNG-INFOLINK-PLAYER"></object>
+<object id="pluginAudio" border=0 classid="clsid:SAMSUNG-INFOLINK-AUDIO"></object>
+<object id="pluginObjectTVMW" border=0 classid="clsid:SAMSUNG-INFOLINK-TVMW"></object>
+<object id="pluginScreen" border=0 classid="clsid:SAMSUNG-INFOLINK-SCREEN"></object>
+<object id="pluginObjectVideo" border=0 classid="clsid:SAMSUNG-INFOLINK-VIDEO"></object>
+<object id="pluginNetwork" classid="clsid:SAMSUNG-INFOLINK-NETWORK" border="0"></object>
+<object id="pluginObjectNNavi" border=0 classid="clsid:SAMSUNG-INFOLINK-NNAVI"></object>
+<object id="pluginTV" classid="clsid:SAMSUNG-INFOLINK-TV" border="0"></object>
+<OBJECT id="pluginObjectAppCommon" border=0 classid="clsid:SAMSUNG-INFOLINK-APPCOMMON"></OBJECT>
+
+<!-- Плагины -->
+
+</head>
+
+<body onload="Main.onLoad();" onunload="Main.onUnload();">
+   <script type="text/javascript" language="javascript" src="$MANAGER_WIDGET/Common/IME/ime2.js"></script>
+	<a href="javascript:void(0);" id="anchor" onkeydown="Main.keyDown();"></a>
+	<div id="main">
+		<div id="spisok">
+			<div id="janr"><!--Категория: &nbsp;&nbsp;&nbsp;&nbsp; -->Фильмы <span style="color:#3399FF; font-size:15px;">(по дате)</span></div>
+			<div id="vidget_ver"></div>
+			<div id="spisok2">
+				<div id="bloc1" class="block"></div>
+				<div id="bloc2" class="block"></div>
+				<div id="bloc3" class="block"></div>
+				<div id="bloc4" class="block"></div>
+				<div id="bloc5" class="block"></div>
+				<div id="bloc6" class="block"></div>
+				<div id="bloc7" class="block"></div>
+				<div id="bloc8" class="block"></div>
+				<div id="bloc9" class="block"></div>
+				<div id="bloc10" class="block"></div>
+				<div id="bloc11" class="block"></div>
+				<div id="bloc12" class="block"></div>
+				<div id="bloc13" class="block"></div>
+				<div id="bloc14" class="block"></div>
+				<div id="bloc15" class="block"></div>
+				
+				<div id="bloc16" class="block"></div>
+				<div id="bloc17" class="block"></div>
+				<div id="bloc18" class="block"></div>
+				<div id="bloc19" class="block"></div>
+				<div id="bloc20" class="block"></div>
+			</div>
+		</div>
+		<div id="playlist">
+			<div id="description"></div>
+			<div id="descript"></div>
+			<div id="list">
+				<div id="list2">
+					<div id="str1">Строка 1</div>
+					<div id="str2">Строка 2</div>
+					<div id="str3">Строка 3</div>
+					<div id="str4">Строка 4</div>
+					<div id="str5">Строка 5</div>
+					<div id="str6">Строка 6</div>
+					<div id="str7">Строка 7</div>
+					<div id="str8">Строка 8</div>
+					<div id="str9">Строка 9</div>
+					<div id="str10">Строка 10</div>
+					<div id="str11">Строка 11</div>
+					<div id="str12">Строка 12</div>
+					<div id="str13">Строка 13</div>
+					<div id="str14">Строка 14</div>
+					<div id="str15">Строка 15</div>
+					<div id="str16">Строка 16</div>
+					<div id="str17">Строка 17</div>
+					<div id="str18">Строка 18</div>
+					<div id="str19">Строка 19</div>
+					<div id="str20">Строка 20</div>
+					<div id="str21">Строка 21</div>
+					<div id="str22">Строка 22</div>
+					<div id="str23">Строка 23</div>
+					<div id="str24">Строка 24</div>
+					<div id="str25">Строка 25</div>
+					<div id="str26">Строка 26</div>
+					<div id="str27">Строка 27</div>
+					<div id="str28">Строка 28</div>
+					<div id="str29">Строка 29</div>
+					<div id="str30">Строка 30</div>
+					<div id="str31">Строка 31</div>
+					<div id="str32">Строка 32</div>
+					<div id="str33">Строка 33</div>
+					<div id="str34">Строка 34</div>
+					<div id="str35">Строка 35</div>
+					<div id="str36">Строка 36</div>
+					<div id="str37">Строка 37</div>
+					<div id="str38">Строка 38</div>
+					<div id="str39">Строка 39</div>
+					<div id="str40">Строка 40</div>
+					<div id="str41">Строка 41</div>
+					<div id="str42">Строка 42</div>
+					<div id="str43">Строка 43</div>
+					<div id="str44">Строка 44</div>
+					<div id="str45">Строка 45</div>
+					<div id="str46">Строка 46</div>
+					<div id="str47">Строка 47</div>
+					<div id="str48">Строка 48</div>
+					<div id="str49">Строка 49</div>
+					<div id="str50">Строка 50</div>
+					<div id="str51">Строка 51</div>
+					<div id="str52">Строка 52</div>
+					<div id="str53">Строка 53</div>
+					<div id="str54">Строка 54</div>
+					<div id="str55">Строка 55</div>
+					<div id="str56">Строка 56</div>
+					<div id="str57">Строка 57</div>
+					<div id="str58">Строка 58</div>
+					<div id="str59">Строка 59</div>
+					<div id="str60">Строка 60</div>
+					<div id="str61">Строка 61</div>
+					<div id="str62">Строка 62</div>
+					<div id="str63">Строка 63</div>
+					<div id="str64">Строка 64</div>
+					<div id="str65">Строка 65</div>
+					<div id="str66">Строка 66</div>
+					<div id="str67">Строка 67</div>
+					<div id="str68">Строка 68</div>
+					<div id="str69">Строка 69</div>
+					<div id="str70">Строка 70</div>
+					<div id="str71">Строка 71</div>
+					<div id="str72">Строка 72</div>
+					<div id="str73">Строка 73</div>
+					<div id="str74">Строка 74</div>
+					<div id="str75">Строка 75</div>
+					<div id="str76">Строка 76</div>
+					<div id="str77">Строка 77</div>
+					<div id="str78">Строка 78</div>
+					<div id="str79">Строка 79</div>
+					<div id="str80">Строка 80</div>
+					<div id="str81">Строка 81</div>
+					<div id="str82">Строка 82</div>
+					<div id="str83">Строка 83</div>
+					<div id="str84">Строка 84</div>
+					<div id="str85">Строка 85</div>
+					<div id="str86">Строка 86</div>
+					<div id="str87">Строка 87</div>
+					<div id="str88">Строка 88</div>
+					<div id="str89">Строка 89</div>
+					<div id="str90">Строка 90</div>
+					<div id="str91">Строка 91</div>
+					<div id="str92">Строка 92</div>
+					<div id="str93">Строка 93</div>
+					<div id="str94">Строка 94</div>
+					<div id="str95">Строка 95</div>
+					<div id="str96">Строка 96</div>
+					<div id="str97">Строка 97</div>
+					<div id="str98">Строка 98</div>
+					<div id="str99">Строка 99</div>
+					<div id="str100">Строка 100</div>
+					<div id="str101">Строка 101</div>
+					<div id="str102">Строка 102</div>
+					<div id="str103">Строка 103</div>
+					<div id="str104">Строка 104</div>
+					<div id="str105">Строка 105</div>
+					<div id="str106">Строка 106</div>
+					<div id="str107">Строка 107</div>
+					<div id="str108">Строка 108</div>
+					<div id="str109">Строка 109</div>
+					<div id="str110">Строка 110</div>
+					<div id="str111">Строка 111</div>
+					<div id="str112">Строка 112</div>
+					<div id="str113">Строка 113</div>
+					<div id="str114">Строка 114</div>
+					<div id="str115">Строка 115</div>
+					<div id="str116">Строка 116</div>
+					<div id="str117">Строка 117</div>
+					<div id="str118">Строка 118</div>
+					<div id="str119">Строка 119</div>
+					<div id="str120">Строка 120</div>
+					<div id="str121">Строка 121</div>
+					<div id="str122">Строка 122</div>
+					<div id="str123">Строка 123</div>
+					<div id="str124">Строка 124</div>
+					<div id="str125">Строка 125</div>
+					<div id="str126">Строка 126</div>
+					<div id="str127">Строка 127</div>
+					<div id="str128">Строка 128</div>
+					<div id="str129">Строка 129</div>
+					<div id="str130">Строка 130</div>
+					<div id="str131">Строка 131</div>
+					<div id="str132">Строка 132</div>
+					<div id="str133">Строка 133</div>
+					<div id="str134">Строка 134</div>
+					<div id="str135">Строка 135</div>
+					<div id="str136">Строка 136</div>
+					<div id="str137">Строка 137</div>
+					<div id="str138">Строка 138</div>
+					<div id="str139">Строка 139</div>
+					<div id="str140">Строка 140</div>
+					<div id="str141">Строка 141</div>
+					<div id="str142">Строка 142</div>
+					<div id="str143">Строка 143</div>
+					<div id="str144">Строка 144</div>
+					<div id="str145">Строка 145</div>
+					<div id="str146">Строка 146</div>
+					<div id="str147">Строка 147</div>
+					<div id="str148">Строка 148</div>
+					<div id="str149">Строка 149</div>
+					<div id="str150">Строка 150</div>
+					<div id="str151">Строка 151</div>
+					<div id="str152">Строка 152</div>
+					<div id="str153">Строка 153</div>
+					<div id="str154">Строка 154</div>
+					<div id="str155">Строка 155</div>
+					<div id="str156">Строка 156</div>
+					<div id="str157">Строка 157</div>
+					<div id="str158">Строка 158</div>
+					<div id="str159">Строка 159</div>
+					<div id="str160">Строка 160</div>
+					<div id="str161">Строка 161</div>
+					<div id="str162">Строка 162</div>
+					<div id="str163">Строка 163</div>
+					<div id="str164">Строка 164</div>
+					<div id="str165">Строка 165</div>
+					<div id="str166">Строка 166</div>
+					<div id="str167">Строка 167</div>
+					<div id="str168">Строка 168</div>
+					<div id="str169">Строка 169</div>
+					<div id="str170">Строка 170</div>
+					<div id="str171">Строка 171</div>
+					<div id="str172">Строка 172</div>
+					<div id="str173">Строка 173</div>
+					<div id="str174">Строка 174</div>
+					<div id="str175">Строка 175</div>
+					<div id="str176">Строка 176</div>
+					<div id="str177">Строка 177</div>
+					<div id="str178">Строка 178</div>
+					<div id="str179">Строка 179</div>
+					<div id="str180">Строка 180</div>
+					<div id="str181">Строка 181</div>
+					<div id="str182">Строка 182</div>
+					<div id="str183">Строка 183</div>
+					<div id="str184">Строка 184</div>
+					<div id="str185">Строка 185</div>
+					<div id="str186">Строка 186</div>
+					<div id="str187">Строка 187</div>
+					<div id="str188">Строка 188</div>
+					<div id="str189">Строка 189</div>
+					<div id="str190">Строка 190</div>
+					<div id="str191">Строка 191</div>
+					<div id="str192">Строка 192</div>
+					<div id="str193">Строка 193</div>
+					<div id="str194">Строка 194</div>
+					<div id="str195">Строка 195</div>
+					<div id="str196">Строка 196</div>
+					<div id="str197">Строка 197</div>
+					<div id="str198">Строка 198</div>
+					<div id="str199">Строка 199</div>
+					<div id="str200">Строка 200</div>					
+				</div>
+			</div>
+		</div>
+		<div id="black"></div>
+		<div id="top"><div id="title">Виджет FS.ua</div></div>
+		
+		<!--форма ввода текста Поиск--->
+		<div id="search" style="display:none;">Поиск</div>
+		<form id="plain" class="window">
+			<input id="plainText" type="text" size="30" />
+		</form>
+		<div id="help_line_1" style="display:none;">
+			<div id="HelpLineButton" style="margin-right:0px;"><img src="images/buttons/blue_.png"></img></div>
+			<span id="HelpLineText">Сортировка</span>
+			<div id="HelpLineButton"><img src="images/buttons/tools_.png"></img></div>
+			<span id="HelpLineText">Поиск</span>
+			<div id="HelpLineButton"><img src="images/buttons/0_9_.png"></img></div>
+			<span id="HelpLineText">Категория</span>
+			<div id="HelpLineButton"><img src="images/buttons/move_.png"></img></div>
+			<span id="HelpLineText">Навигация</span>
+			<div id="HelpLineButton"><img src="images/buttons/enter_.png"></img></div>
+			<span id="HelpLineText">Выбор</span>
+			<div id="HelpLineButton"><img src="images/buttons/favch.png"></img></div>
+			<span id="HelpLineText">Избранное</span>
+			<div id="HelpLineButton"><img src="images/buttons/exit_.png"></img></div>
+			<span id="HelpLineText">Выход</span>
+		</div>
+		<div id="help_line_2" style="display:none;">
+			<div id="HelpLineButton"><img src="images/buttons/Yellow.png"></img></div>
+			<span id="HelpLineText">Добавить в Избр.</span>
+			<div id="HelpLineButton"><img src="images/buttons/psize_.png" ></img></div>
+			<span id="HelpLineText">Формат изображения</span>
+			<div id="HelpLineButton"><img src="images/buttons/lr_.png"></img></div>
+			<span id="HelpLineText">Перемотка 2 мин</span>
+			<div id="HelpLineButton"><img src="images/buttons/llrr_.png"></img></div>
+			<span id="HelpLineText">Перемотка 30 сек</span>
+			<div id="HelpLineButton"><img src="images/buttons/enter_.png"></img></div>
+			<span id="HelpLineText">Выбор</span>
+			<div id="HelpLineButton"><img src="images/buttons/exit_.png"></img></div>
+			<span id="HelpLineText">Выход</span>
+		</div>
+		<div id="help_line_3" style="display:none;">
+			<div id="HelpLineButton"><img src="images/buttons/lr_.png"></img></div>
+			<span id="HelpLineText">Call the IME</span>
+			<div id="HelpLineButton"><img src="images/buttons/enter_.png"></img></div>
+			<span id="HelpLineText">Выполнить поиск</span>
+			<div id="HelpLineButton"><img src="images/buttons/back_.png"></img></div>
+			<span id="HelpLineText">Возврат</span>
+		</div>
+		<div id="help_line_4" style="display:none;">
+			<div id="HelpLineButton"><img src="images/buttons/Yellow.png"></img></div>
+			<span id="HelpLineText">Удалить из Избр.</span>
+			<div id="HelpLineButton"><img src="images/buttons/tools_.png"></img></div>
+			<span id="HelpLineText">Поиск</span>
+			<div id="HelpLineButton"><img src="images/buttons/0_9_.png"></img></div>
+			<span id="HelpLineText">Категория</span>
+			<div id="HelpLineButton"><img src="images/buttons/move_.png"></img></div>
+			<span id="HelpLineText">Навигация</span>
+			<div id="HelpLineButton"><img src="images/buttons/enter_.png"></img></div>
+			<span id="HelpLineText">Выбор</span>
+			<div id="HelpLineButton"><img src="images/buttons/exit_.png"></img></div>
+			<span id="HelpLineText">Выход</span>
+		</div>
+	</div>
+	    <div id="player" style="display:none;">
+        <div class="p_firts_line">
+            <div id="play_name"></div><div id="ch_category"></div><div id="time"></div>
+        </div>
+        <div class="p_second_line">
+            <div id="help_navi_l_player" style="">
+                <div id="screen_size"><div id="navi_button"><img src="images/buttons/psize.png"><img src="images/buttons/ud.png"></div><span id="navi_helpertext"></span></div>
+            </div>
+        </div>
+        <div class="p_third_line">
+            <div id="help_navi_player" style="">
+                <div id="but_pause" style="display:none"><div id="navi_button"><img src="images/buttons/pause.png"></img></div><span id="navi_helpertext"></span></div>
+                <div id="but_play"><div id="navi_button"><img src="images/buttons/play.png"></img></div><span id="navi_helpertext"></span></div>
+				<div id="but_rew"><img src="images/buttons/rew.png"></img></div><span id="navi_helpertext"></span>
+				<div id="but_ff"><img src="images/buttons/ff.png"></img></div><span id="navi_helpertext"></span>
+				<div id="but_psize"><img src="images/buttons/psize.png"></img></div><span id="navi_helpertext"></span>
+				<div id="but_info"><img src="images/buttons/info.png"></img></div><span id="navi_helpertext"></span>
+                <div id="navi_button"></div><span id="navi_helpertext"></span>
+            </div> 
+        </div>
+        <div  class="p_info_line" >
+            <div id="infoMovi" style="display:none;">
+                <div id="progressBarBG"></div><div id="progressBar"></div><div id="timeInfo">0:00:00/0:00:00</div>
+            </div>
+        </div>      
+    </div>
+        <div id="statusline" style="display:none;"><span id="status_line_span"></span></div>
+<!-- 
+        <div id="statusbar1" style="display:none;"><span id="status1"></span></div>
+        <div id="selectbox" style="display:none;"></div>
+         -->        
+</body>
+</html>
