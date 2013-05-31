@@ -84,7 +84,6 @@ Favorites.del = function(){
 	Favorites.readAll();
 	Favorites.delLine();
 	Favorites.writeAll();
-//	Favorites.open();
 	Main.clearBlocks();
 	Favorites.showItems();
 	Display.statusLine("Удалено из избранного");

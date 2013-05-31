@@ -162,12 +162,13 @@ URLtoXML.ParseXMLData = function() {
 			
 			var arr = sOut.split('<li class="folder">');
 			for (var i in arr) {
-				var myRe = /\<a .* name=\"fl\d+\" class=\"link-\w+\s?(\S*)?\s?title" rel="{parent_id: '?(\d+)'?}">(\n\s*)?(.+)\<\/a\>/igm;
+//				var myRe = /\<a .* name=\"fl\d+\" class=\"link-\w+\s?(\S*)?\s?title" rel="{parent_id: '?(\d+)'?}">(\n\s*)?(.+)\<\/a\>/igm;
+				var myRe = /\<a .* name=\"fl\d+\" class=\"link-\w+\s?(\S*)?\s?title" rel="{parent_id: '?(\d+)'?}"(\sstyle=\".*\")?\>(\n\s*)?(.+)\<\/a\>/igm;
 				if (id = myRe.exec(arr[i])){
 				
 //						id[1] - ikonka lang
 //						id[2] - id
-//						id[4] - Perevod name
+//						id[5] - Perevod name
 
 //					myRe = /\<a href=\"\/(.*)\" class=\"folder-filelist\">.*\<\/a\>/igm;
 //					var fl = myRe.exec(arr[i]);
@@ -184,8 +185,9 @@ URLtoXML.ParseXMLData = function() {
 					
 					var name = '<div class="link-subtype';
 					if (id[1]){ name+=' '+id[1]+'">'; }else{ name+='">'; }
-					if (id[4]){ if (id[1]){ name+='<span class="voice">'+id[4]+'</span>'; }
-					else{ name+=id[4]; } }
+					if (id[5]){ name+='<span class="voice">'+id[5]+'</span>'; }
+//					if (id[1]){ name+='<span class="voice">'+id[5]+'</span>'; }
+//					else{ name+=id[5]; } }
 					name+='&nbsp;&nbsp;';
 					if (ms){
 						if(ms[2]){ 

@@ -417,3 +417,7 @@ width:640px;
 	color: inherit;
 	font-family: Times New Roman, Times, serif;
 }
+
+.link-subtype .voice *{
+	font-weight: normal;
+}

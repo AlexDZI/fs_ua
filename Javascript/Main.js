@@ -15,7 +15,7 @@ showHandler = function() {
 	pluginAPI.setOffScreenSaver();
 };
 var Main = {
-	version_vidget : "0.3.2",
+	version_vidget : "0.3.4",
 	mode : 0, // состояние полноэкранного режима
 	WINDOW : 0,
 	FULLSCREEN : 1,
@@ -180,7 +180,7 @@ Main.keyDown = function() {
 		}
 		break;
 		
-	case tvKey.KEY_FAVCH:
+	case tvKey.KEY_CHLIST:
 		if (this.playlist == 0)
 			Favorites.open();
 		break;
@@ -255,6 +255,11 @@ Main.keyDown = function() {
 			break;
 		};////////
 
+//		alert('fl:'+URLtoXML.folders.length+', '+this.playlist);
+		if (URLtoXML.folders.length==0 && this.playlist==2) 
+			this.playlist=1;
+		
+		
 		if (URLtoXML.folders.length>0){
 			delete URLtoXML.folders[URLtoXML.folders.length-1];
 			URLtoXML.folders.length--;
@@ -478,7 +483,7 @@ Main.ActivString = function(smeh) {
 };
 
 Main.ListTop = function() { // смещение списка по достижению пределов
-	document.getElementById("list2").style.top = (-421 * Math.floor((b-1)/20))+"px";
+	document.getElementById("list2").style.top = (-421 * Math.floor((b-1)/19))+"px";
 };
 
 Main.handlePauseKey = function() {
