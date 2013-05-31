@@ -255,7 +255,6 @@ Main.keyDown = function() {
 			break;
 		};////////
 
-//		alert('fl:'+URLtoXML.folders.length+', '+this.playlist);
 		if (URLtoXML.folders.length==0 && this.playlist==2) 
 			this.playlist=1;
 		
@@ -285,7 +284,11 @@ Main.keyDown = function() {
 				Display.help_line_1();
 			}
 		}else{
-			Display.help_line_2();
+			if (Favorites.isVisible){
+				Display.help_line_2_1();
+			}else{
+				Display.help_line_2();
+			}
 			
 			Main.handleActiv();
 			for ( var h = 1; h <= 200; h++) {
@@ -428,7 +431,11 @@ Main.keyDown = function() {
 					+ "max-width: 200px; max-height: 200px; ' align='left'"
 					+ URLtoXML.pDes[this.index]);
 */
-		Display.help_line_2();
+		if (Favorites.isVisible){
+			Display.help_line_2_1();
+		}else{
+			Display.help_line_2();
+		}
 		
 		break;
  
@@ -620,12 +627,12 @@ Main.toggleMode = function() {
 
 Main.setResSimple = function() {
 	document.getElementById("spisok2").class = '';
-	resMore = false;
+	this.resMore = false;
 };
 
 Main.setResMore = function() {
 	document.getElementById("spisok2").class = 'moreres';
-	resMore = true;
+	this.resMore = true;
 };
 
 Main.clearBlocks = function(){

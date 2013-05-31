@@ -249,6 +249,7 @@ Display.help_line_1 = function()
 {
 	
 	document.getElementById("help_line_2").style.display="none";
+	document.getElementById("help_line_2_1").style.display="none";
 	document.getElementById("help_line_3").style.display="none";
 	document.getElementById("help_line_4").style.display="none";
 	document.getElementById("help_line_1").style.display="block";
@@ -256,14 +257,24 @@ Display.help_line_1 = function()
 Display.help_line_2 = function()
 {
 	document.getElementById("help_line_1").style.display="none";
+	document.getElementById("help_line_2_1").style.display="none";
 	document.getElementById("help_line_3").style.display="none";
 	document.getElementById("help_line_4").style.display="none";
 	document.getElementById("help_line_2").style.display="block";
+};
+Display.help_line_2_1 = function()
+{
+	document.getElementById("help_line_1").style.display="none";
+	document.getElementById("help_line_3").style.display="none";
+	document.getElementById("help_line_4").style.display="none";
+	document.getElementById("help_line_2").style.display="none";
+	document.getElementById("help_line_2_1").style.display="block";
 };
 Display.help_line_3 = function()
 {
 	document.getElementById("help_line_1").style.display="none";
 	document.getElementById("help_line_2").style.display="none";
+	document.getElementById("help_line_2_1").style.display="none";
 	document.getElementById("help_line_4").style.display="none";
 	document.getElementById("help_line_3").style.display="block";
 };
@@ -271,6 +282,7 @@ Display.help_line_3 = function()
 Display.help_line_4 = function(){
 	document.getElementById("help_line_1").style.display="none";
 	document.getElementById("help_line_2").style.display="none";
+	document.getElementById("help_line_2_1").style.display="none";
 	document.getElementById("help_line_3").style.display="none";
 	document.getElementById("help_line_4").style.display="block";
 }

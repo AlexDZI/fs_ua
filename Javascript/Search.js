@@ -33,12 +33,11 @@ Search.onEnter = function(string) {
 	Main.search = true;
 	Favorites.isVisible = false;
 	Main.setResMore();
-	
-	widgetAPI.putInnerHTML(document.getElementById("janr"), 'Поиск: '+rezylt);
+	widgetAPI.putInnerHTML(document.getElementById("janr"), 'Поиск: '+string);
 	Main.clearBlocks();
 	
 	URLtoXML.xmlHTTP = null;
-	Main.sURL = Main.janrURL+"search.aspx?search=" + rezylt;
+	Main.sURL = Main.janrURL+"search.aspx?search=" + string;
 //	alert(Main.sURL);
 	URLtoXML.Proceed(Main.sURL);
 
