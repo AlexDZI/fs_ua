@@ -197,8 +197,12 @@ Main.keyDown = function() {
 		
 	case tvKey.KEY_BLUE: // переключение типа полноэкранного режима (циклично от
 		// 1 до 5, начальное значение 2)
-		if (this.playlist == 0 && !this.search && !Favorites.isVisible)
+		if (this.playlist == 0 && !this.search && !Favorites.isVisible){
 			Main.sortSelectNext();
+		}else{
+			currentFSMode = (currentFSMode < maxFSMode) ? currentFSMode + 1 : 1;
+			Player.setScreenMode(currentFSMode);
+		}
 		break;
 		
 	case tvKey.KEY_ASPECT: // переключение типа полноэкранного режима (циклично от
