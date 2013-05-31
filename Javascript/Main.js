@@ -281,7 +281,11 @@ Main.keyDown = function() {
 			if (Favorites.isVisible){
 				Display.help_line_4();
 			}else{
-				Display.help_line_1();
+				if (this.search){
+					Display.help_line_5();
+				}else{
+					Display.help_line_1();
+				}
 			}
 		}else{
 			if (Favorites.isVisible){
