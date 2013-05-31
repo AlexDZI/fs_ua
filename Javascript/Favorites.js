@@ -32,7 +32,8 @@ Favorites.addLine = function() {
 
 Favorites.writeAll = function() {
 	var fileSystemObj = new FileSystem();
-    var fileObj = fileSystemObj.openCommonFile(curWidget.id+'/ex_fav.data','w');
+	if (!fileSystemObj.isValidCommonPath(curWidget.id)) fileSystemObj.createCommonDir(curWidget.id);
+    var fileObj = fileSystemObj.openCommonFile(curWidget.id+'/fs_fav.data','w');
     if (fileObj)
     {
         var str = JSON.stringify(this.items);
@@ -43,7 +44,7 @@ Favorites.writeAll = function() {
 
 Favorites.readAll = function() {	
 	var fileSystemObj = new FileSystem();
-	var fileObj = fileSystemObj.openCommonFile(curWidget.id+'/ex_fav.data','r');
+	var fileObj = fileSystemObj.openCommonFile(curWidget.id+'/fs_fav.data','r');
 	if (fileObj){
 		var strResult = fileObj.readAll();
 		if (strResult)
