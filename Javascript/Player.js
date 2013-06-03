@@ -264,31 +264,13 @@ Player.skipBackwardVideoFast = function() {
 	Display.showplayer();
 };
 
-Player.PercentJump = function(percent) 
-{
-                if(this.jump==0)
-                {
-                    this.statusmessage = percent*10 + "%";
-                    var jump_to_minutes = (this.duration*percent/10 - this.current_time)/1000;
-                                if (jump_to_minutes > 0)
-                                {
-                                    this.plugin.JumpForward(jump_to_minutes); 
-                                    this.jump=1;
-                                }
-                                else if (jump_to_minutes < 0)
-                                {
-                                    this.plugin.JumpBackward(jump_to_minutes*-1);
-                                    this.jump=1;
-
-                                }
-                                widgetAPI.putInnerHTML(Display.statusDiv,(this.statusmessage));
-                                if(this.jump==1)
-                                {
-                                    this.state = this.PAUSA;
-                                    Display.showplayer();
-                                    clearTimeout(Display.loadingshow_timer);
-                                }
-                }
+Player.PercentJump = function(percent) {
+	this.statusmessage = percent*10 + "%";
+	var jump_to_minutes = Math.round((VideoDuration*percent/10)/1000);
+	if (jump_to_minutes > 0) this.plugin.JumpForward(jump_to_minutes); 
+	if (jump_to_minutes < 0) this.plugin.JumpBackward(jump_to_minutes*-1);
+	widgetAPI.putInnerHTML(Display.statusDiv,(this.statusmessage));
+	Display.showplayer();
 };
 
 // функция таймера проигрывания трека, вызывается плагином:

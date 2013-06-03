@@ -74,26 +74,28 @@ URLtoXML.ParseXMLData = function() {
 	{
 		// сразу удаляем переводы строк для удобного поиска
 		sOut = this.xmlHTTP.responseText;
+		
+		var myRe;
 
 		if (Main.playlist == 0) {
 			if (Main.search){
 				var arr = sOut.split('<td class="num">');
 				for (var i in arr) {
-					var myRe = /\<a href=\"(.*)\" class=\"title\"\>(.*)\<\/a\>/ig;
+					myRe = new RegExp("\<a href=\"(.*)\" class=\"title\"\>(.*)\<\/a\>","ig");
 					if (name = myRe.exec(arr[i])){
 						index++;
 						this.UrlSt[index] = this.prefixURL + name[1] + '?ajax&folder=0';
 						this.sName[index] = name[2];
 
-						myRe = /\<a href=\".*\" title=\".*\"\>\<img src=\"(.*)\/5\/(.*)\" border=\"0\"\>\<\/a\>/ig;
+						myRe = new RegExp("\<a href=\".*\" title=\".*\"\>\<img src=\"(.*)\/5\/(.*)\" border=\"0\"\>\<\/a\>","ig");
 						if (img = myRe.exec(arr[i])){
 							this.ImgDickr[index] = img[1]+'/6/'+img[2];
 						}else{
 							this.ImgDickr[index] = '';
 						}
 
-						arr[i] = arr[i].replace(/\<br\s?\/\>(\s*)?\r?\n?/igm, '<br/>');
-						myRe = /\<p class=\"text\"\>((.|\n)*)\<\/p\>\n/igm;
+						arr[i] = arr[i].replace(new RegExp("\<br\\s?\/\>(\\s*)?\\r?\\n?","igm"), '<br/>');
+						myRe = new RegExp("\<p class=\"text\"\>((.|\\n)*)\<\/p\>\\n","igm");
 						if (desc = myRe.exec(arr[i])){
 							desc[1] = URLtoXML.DelWords(desc[1]);
 							desc[1] = URLtoXML.DelTrash(desc[1]);
@@ -118,22 +120,22 @@ URLtoXML.ParseXMLData = function() {
 			
 				var arr = sOut.split('<div class="b-poster-section-detail">');
 				for (var i in arr) {
-					var myRe = /\<a class=\"subject-link m-themed\" href=\"(.+)\"\>(.+)\<\/a\>/igm;
+					myRe = new RegExp("\<a class=\"subject-link m-themed\" href=\"(.+)\"\>(.+)\<\/a\>","igm");
 					if (name = myRe.exec(arr[i])){
 						index++;
 						this.UrlSt[index] = this.prefixURL + name[1] + '?ajax&folder=0';
 						this.sName[index] = name[2];
 						
 						var descr = '';
-						myRe = /\<p\>(.*)\<\/p\>/igm;
+						myRe = new RegExp("\<p\>(.*)\<\/p\>","igm");
 						if (vRol = myRe.exec(arr[i])){
 							descr = URLtoXML.DelWords(vRol[1]);
 							descr = URLtoXML.DelTrash(descr);
 							descr = '<span class="vRol">'+descr+'</span><br>';
 						}
 						
-						arr[i] = arr[i].replace(/\<br\s?\/\>(\s*)?\r?\n?/igm, '<br/>');
-						myRe = /\<div class=\"main\"\>\n.*\n.*\<img src=\"(.+)\" .* width=.*\/\>\n.*\n.*\<div class=\"text\"\>((.|\n)*)\<\/div\>\n.*\<\/div\>\n\<\/div\>/igm;
+						arr[i] = arr[i].replace(new RegExp("\<br\\s?\/\>(\\s*)?\\r?\\n?","igm"), '<br/>');
+						myRe = new RegExp("\<div class=\"main\"\>\\n.*\\n.*\<img src=\"(.+)\" .* width=.*\/\>\\n.*\\n.*\<div class=\"text\"\>((.|\\n)*)\<\/div\>\\n.*\<\/div\>\\n\<\/div\>","igm");
 						if (img = myRe.exec(arr[i])){
 							this.ImgDickr[index] = img[1];
 							descr += img[2];
@@ -163,7 +165,7 @@ URLtoXML.ParseXMLData = function() {
 			var arr = sOut.split('<li class="folder">');
 			for (var i in arr) {
 //				var myRe = /\<a .* name=\"fl\d+\" class=\"link-\w+\s?(\S*)?\s?title" rel="{parent_id: '?(\d+)'?}">(\n\s*)?(.+)\<\/a\>/igm;
-				var myRe = /\<a .* name=\"fl\d+\" class=\"link-\w+\s?(\S*)?\s?title" rel="{parent_id: '?(\d+)'?}"(\sstyle=\".*\")?\>(\n\s*)?(.+)\<\/a\>/igm;
+				myRe = new RegExp("\<a .* name=\"fl\\d+\" class=\"link-\\w+\\s?(\\S*)?\\s?title\" rel=\"{parent_id: '?(\\d+)'?}\"(\\sstyle=\".*\")?\>(\\n\\s*)?(.+)\<\/a\>","igm");
 				if (id = myRe.exec(arr[i])){
 				
 //						id[1] - ikonka lang
@@ -174,13 +176,13 @@ URLtoXML.ParseXMLData = function() {
 //					var fl = myRe.exec(arr[i]);
 //						fl[1] - file list url						
 					
-					myRe = /\<span class=\"material-size\"\>(.*)\<\/span\>\n.*\<span class=\"material-size\"\>(.*)\<\/span\>/igm;
+					myRe = new RegExp("\<span class=\"material-size\"\>(.*)\<\/span\>\\n.*\<span class=\"material-size\"\>(.*)\<\/span\>","igm");
 					var ms = myRe.exec(arr[i]);
 					if (!ms){
-						myRe = /\<span class=\"material-size\"\>(.*)\<\/span\>/igm;
+						myRe = new RegExp("\<span class=\"material-size\"\>(.*)\<\/span\>","igm");
 						ms = myRe.exec(arr[i]);
 					}
-					myRe = /\<span class=\"material-details\"\>(.*)\<\/span\>/igm;
+					myRe = new RegExp("\<span class=\"material-details\"\>(.*)\<\/span\>","igm");
 					var md = myRe.exec(arr[i]);
 					
 					var name = '<div class="link-subtype';
@@ -231,11 +233,11 @@ URLtoXML.ParseXMLData = function() {
 			this.pUrlSt = [];
 			
 //			myRe = /(.*\/(.*))\r\n/igm;
-			myRe = /\<a id=\".*\" href=\"(.*\/(.*\.(.*)))\" class=\".*b-file-new__link-material-download.*\"\>\n/igm;
+			myRe = new RegExp("\<a id=\".*\" href=\"(.*\/(.*\\.(.*)))\" class=\".*b-file-new__link-material-download.*\"\>\\n","igm");
 			while (sres = myRe.exec(sOut)) {
 				if(this.arrVideoExt.indexOf(sres[3])>-1){
 					index++;
-					this.pName[index] = decodeURIComponent(sres[2].replace(/\+/g,  " "));
+					this.pName[index] = decodeURIComponent(sres[2].replace(new RegExp("\\+","g"),  " "));
 					this.pUrlSt[index] = sres[1];
 					widgetAPI.putInnerHTML(document.getElementById("str" + index), this.pName[index]);
 				}

@@ -403,6 +403,10 @@ width:640px;
 	color: inherit;
 }
 
+.selected, .selected .link-subtype, .selected .link-subtype B{
+	color: #3399FF;
+}
+
 .link-subtype{
 	display: inline-block;
 	padding: 0 0 4px 23px;

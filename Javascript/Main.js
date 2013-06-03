@@ -15,7 +15,7 @@ showHandler = function() {
 	pluginAPI.setOffScreenSaver();
 };
 var Main = {
-	version_vidget : "0.3.4",
+	version_vidget : "0.3.5",
 	mode : 0, // состояние полноэкранного режима
 	WINDOW : 0,
 	FULLSCREEN : 1,
@@ -130,14 +130,14 @@ Main.keyDown = function() {
 		break;
 		
 	case tvKey.KEY_1:
-//		if ((Player.getState() == Player.PLAYING || Player.getState() == Player.PAUSED) && this.mode == this.FULLSCREEN)
-//			Player.PercentJump(1);
+		if ((Player.getState() == Player.PLAYING || Player.getState() == Player.PAUSED) && this.mode == this.FULLSCREEN)
+			Player.PercentJump(1);
 		if (this.playlist == 0)
 			Main.NewJanr("http://fs.ua/video/films/", "Фильмы");
 		break;
 	case tvKey.KEY_2:
-//		if ((Player.getState() == Player.PLAYING || Player.getState() == Player.PAUSED) && this.mode == this.FULLSCREEN)
-//			Player.PercentJump(2);
+		if ((Player.getState() == Player.PLAYING || Player.getState() == Player.PAUSED) && this.mode == this.FULLSCREEN)
+			Player.PercentJump(2);
 		if (this.playlist == 0)
 			Main.NewJanr("http://fs.ua/video/cartoons/", "Мультфильмы");
 		break;
@@ -515,13 +515,13 @@ Main.handlePauseKey = function() {
 Main.handleActiv = function() {
 	document.getElementById("list2").style.top = "0px"; // переключение списка
 	// на 0
-	document.getElementById("str" + b).style.color = "#FFF"; // возвращение
+	document.getElementById("str" + b).class = '';
 	// цвета с
 	// активного на
 	// пасивный
 	b = 1;
 	c = 1;
-	document.getElementById("str" + b).style.color = "#3399FF"; // активная
+	document.getElementById("str" + b).class = 'selected';
 	// строка
 };
 Main.selectNextVideo = function() {
@@ -529,10 +529,10 @@ Main.selectNextVideo = function() {
 		b = 199;
 	} // предел max
 	b++;
-	document.getElementById("str" + b).style.color = "#3399FF"; // активная
+	document.getElementById("str" + b).class = 'selected';
 	// строка
 	c = b - 1;
-	document.getElementById("str" + c).style.color = "#FFF"; // возвращение
+	document.getElementById("str" + c).class = '';
 	// цвета с
 	// активного на
 	// пасивный
@@ -543,10 +543,10 @@ Main.selectUpVideo = function(){
 		b = 2;
 	} // предел min
 	b = b - 1;
-	document.getElementById("str" + b).style.color = "#3399FF"; // активная
+	document.getElementById("str" + b).class = 'selected';
 	// строка
 	c = b + 1;
-	document.getElementById("str" + c).style.color = "#FFF"; // возвращение
+	document.getElementById("str" + c).class = '';
 	// цвета с
 	// активного на
 	// пасивный
