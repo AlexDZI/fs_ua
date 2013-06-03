@@ -25,6 +25,7 @@ var Main = {
 	smeh : 5, // смещение при перемещении верх-низ на странице
 	page : 0, // номер строки с общими списками
 
+	listRowsPerPage : 19,
 	playlist : 0,
 	sta : 0, // пауза или играть с начала
 
@@ -316,29 +317,29 @@ Main.keyDown = function() {
 		break;
 
 	case tvKey.KEY_LEFT: // лево
-		if (Player.getState() == Player.PLAYING && this.mode == this.FULLSCREEN)
-		{
+		if (Player.getState() == Player.PLAYING && this.mode == this.FULLSCREEN){
 			Player.skipBackwardVideoFast();
-			break;
-		}
-		else{
-		if (this.playlist == 0 && this.index>0) {
-			if (this.index == 1) {
-				this.smeh = Main.NewString(0, -1) ? (this.resMore?19:14) : 0;
-				this.index = 1;
-				Main.ActivString(this.smeh);
-			}
-			else {
-				Main.ActivString(-1);
+		}else{
+			if (this.playlist == 0 && this.index>0) {
+				if (this.index == 1) {
+					this.smeh = Main.NewString(0, -1) ? (this.resMore?19:14) : 0;
+					this.index = 1;
+					Main.ActivString(this.smeh);
+				}else{
+					Main.ActivString(-1);
+				}
+			}else if ((this.playlist == 1 || this.playlist == 2) && this.index>0) {
+				Main.selectUpPageVideo();
+				if (this.playlist == 1){
+					URLtoXML.folders[URLtoXML.folders.length-1].currIdx = b;
 				}
 			}
-			break;
 		}
+		break;
 
 	case tvKey.KEY_RIGHT: // право
 		if (Player.getState() == Player.PLAYING && this.mode == this.FULLSCREEN) {
 			Player.skipForwardVideoFast();
-			break;
 		}else{
 			if (this.playlist == 0 && this.index<URLtoXML.ImgDickr.length) {
 				if (this.index == (this.resMore?20:15)) {
@@ -347,6 +348,11 @@ Main.keyDown = function() {
 					Main.ActivString(0);
 				}else if (this.index<URLtoXML.ImgDickr.length-1) {
 					Main.ActivString(1);
+				}
+			}else if (this.playlist == 1 || this.playlist == 2) {
+				Main.selectNextPageVideo();
+				if (this.playlist == 1){
+					URLtoXML.folders[URLtoXML.folders.length-1].currIdx = b;
 				}
 			}
 			break;
@@ -363,7 +369,7 @@ Main.keyDown = function() {
 			}// переход поиска вверх
 			Main.ActivString(this.smeh);// активная строка
 		} else if (this.playlist == 1 || this.playlist == 2) {
-			this.selectUpVideo();
+			Main.selectUpVideo();
 			if (this.playlist == 1){
 				URLtoXML.folders[URLtoXML.folders.length-1].currIdx = b;
 			}
@@ -388,7 +394,7 @@ Main.keyDown = function() {
 			}else{
 				if (b>=URLtoXML.pUrlSt.length-1) break;
 			}
-			this.selectNextVideo();
+			Main.selectNextVideo();
 			this.sta = 1; // играть c начала
 
 			if (this.playlist == 1){
@@ -498,7 +504,7 @@ Main.ActivString = function(smeh) {
 };
 
 Main.ListTop = function() { // смещение списка по достижению пределов
-	document.getElementById("list2").style.top = (-421 * Math.floor((b-1)/19))+"px";
+	document.getElementById("list2").style.top = (-421 * Math.floor((b-1)/this.listRowsPerPage))+"px";
 };
 
 Main.handlePauseKey = function() {
@@ -525,32 +531,50 @@ Main.handleActiv = function() {
 	// строка
 };
 Main.selectNextVideo = function() {
-	if (b == 200) {
-		b = 199;
-	} // предел max
-	b++;
-	document.getElementById("str" + b).class = 'selected';
-	// строка
-	c = b - 1;
-	document.getElementById("str" + c).class = '';
-	// цвета с
-	// активного на
-	// пасивный
-	this.sta = 1;// играть c начала
+	if (b < 200) {
+		c = b;
+		document.getElementById("str" + c).class = '';
+		b++;
+		document.getElementById("str" + b).class = 'selected';
+		this.sta = 1;// играть c начала
+	}
 };
 Main.selectUpVideo = function(){
-	if (b == 1) {
-		b = 2;
-	} // предел min
-	b = b - 1;
-	document.getElementById("str" + b).class = 'selected';
-	// строка
-	c = b + 1;
-	document.getElementById("str" + c).class = '';
-	// цвета с
-	// активного на
-	// пасивный
-	this.sta = 1;// играть c начала
+	if (b > 1) {
+		c = b;
+		document.getElementById("str" + c).class = '';
+		b--;
+		document.getElementById("str" + b).class = 'selected';
+		this.sta = 1;// играть c начала
+	} 	
+};
+
+Main.selectNextPageVideo = function() {
+	if (b < 200) {
+		c = b;
+		document.getElementById("str" + c).class = '';
+		b+=this.listRowsPerPage;
+		if (this.playlist == 1){
+			if (b>=URLtoXML.folders[URLtoXML.folders.length-1].urls.length)
+				b=URLtoXML.folders[URLtoXML.folders.length-1].urls.length;
+		}else{
+			if (b>=URLtoXML.pUrlSt.length-1)
+				b=URLtoXML.pUrlSt.length-1;
+		}
+		if (b>200) b=200;
+		document.getElementById("str" + b).class = 'selected';
+		this.sta = 1;// играть c начала
+	} // предел max
+};
+Main.selectUpPageVideo = function(){
+	if (b > 1) {
+		c = b;
+		document.getElementById("str" + c).class = '';
+		b-=this.listRowsPerPage;
+		if (b<1) b=1;
+		document.getElementById("str" + b).class = 'selected';
+		this.sta = 1;// играть c начала
+	}
 };
 
 Main.handlePlayKey = function(url)
