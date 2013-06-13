@@ -15,7 +15,7 @@ showHandler = function() {
 	pluginAPI.setOffScreenSaver();
 };
 var Main = {
-	version_vidget : "0.3.5",
+	version_vidget : "0.3.6",
 	mode : 0, // состояние полноэкранного режима
 	WINDOW : 0,
 	FULLSCREEN : 1,
@@ -81,7 +81,7 @@ Main.onLoad = function() {
 		if(this.search){
 			this.sURL = this.janrURL;
 		}else{
-			this.sURL = this.janrURL + '?page=' + this.page + '&view=detailed&sort='+Main.getSortPar();
+			this.sURL = this.janrURL + '?page=' + this.page + '&sort='+Main.getSortPar();
 		}
 
 		URLtoXML.Proceed(this.sURL);
@@ -308,7 +308,7 @@ Main.keyDown = function() {
 			
 			if (URLtoXML.folders.length==0){
 //				this.sURL = URLtoXML.UrlSt[this.index]; // адрес страницы альбома
-				URLtoXML.Proceed(URLtoXML.UrlSt[this.index]);
+				URLtoXML.Proceed(URLtoXML.UrlSt[this.index]+'?ajax&folder=0');
 			}else{
 				var currIDX = URLtoXML.folders[URLtoXML.folders.length-1].currIdx-1;
 				URLtoXML.Proceed(URLtoXML.folders[URLtoXML.folders.length-1].urls[currIDX]);
@@ -414,7 +414,7 @@ Main.keyDown = function() {
 			}
 
 			URLtoXML.xmlHTTP = null;
-			URLtoXML.Proceed(URLtoXML.UrlSt[this.index]);
+			URLtoXML.Proceed(URLtoXML.UrlSt[this.index]+'?ajax&folder=0');
 			document.getElementById("spisok").style.display = "none";
 			document.getElementById("playlist").style.display = "block";
 			document.getElementById("descript").style.display = "block";
@@ -485,7 +485,7 @@ Main.NewString = function(per, a) {
 		if (this.search){
 			this.sURL += '&page=' + this.page;
 		}else{
-			this.sURL = this.janrURL + '?view=detailed&page=' + this.page + '&sort='+Main.getSortPar(); // жанр
+			this.sURL = this.janrURL + '?page=' + this.page + '&sort='+Main.getSortPar(); // жанр
 		}
 		// +
 		// страница
@@ -614,11 +614,13 @@ Main.NewJanr = function(janr, text) {
 	Main.setResSimple();
 	Main.clearBlocks();
 	
+	this.page = 0;
+	
 	this.janrURL = janr;
 	this.janrText = text;
 	
 	URLtoXML.xmlHTTP = null;
-	this.sURL = janr + '?view=detailed&page=' + this.page + '&sort='+Main.getSortPar(); // жанр +
+	this.sURL = janr + '?page=' + this.page + '&sort='+Main.getSortPar(); // жанр +
 	// страница
 	URLtoXML.Proceed(this.sURL);
 	widgetAPI.putInnerHTML(document.getElementById("janr"), text+" <span style=\"color:#3399FF; font-size:15px;\">("+Main.getSortText()+")</span>");

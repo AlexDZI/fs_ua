@@ -44,6 +44,22 @@ URLtoXML.deinit = function () {
 // обработка ссылки
 URLtoXML.Proceed = function(sURL) {
 
+	if (this.pDes[Main.index]=='' && Main.playlist==1){
+		this.xmlHTTP = null;
+		this.xmlHTTP = new XMLHttpRequest();
+		
+		this.xmlHTTP.open("GET", this.UrlSt[Main.index], false); // ?асинхронно
+
+		this.xmlHTTP.onreadystatechange = function() {
+			if (URLtoXML.xmlHTTP.readyState == 4) {
+				URLtoXML.ParsePageDesctData(); // генерим конечный плейлист на основании полученных данных
+			}
+		};
+		this.xmlHTTP.setRequestHeader("User-Agent","Opera/9.80 (Windows NT 5.1; U; ru) Presto/2.9.168 Version/11.51");
+		this.xmlHTTP.send();
+		this.xmlHTTP = null;
+	}
+
 	this.outTXT = "";// очищаем строку-приемник конечного плейлиста
 
 	if (this.xmlHTTP == null) {// инициализируем связь с интернетом
@@ -62,6 +78,46 @@ URLtoXML.Proceed = function(sURL) {
 
 		this.xmlHTTP.setRequestHeader("User-Agent","Opera/9.80 (Windows NT 5.1; U; ru) Presto/2.9.168 Version/11.51");
 		this.xmlHTTP.send();
+	}
+};
+
+URLtoXML.ParsePageDesctData = function() {
+	var sOut;
+	if (this.xmlHTTP.status == 200){
+		// сразу удаляем переводы строк для удобного поиска
+		sOut = this.xmlHTTP.responseText;
+		
+//		alert('----------------------------------');
+		var descr;
+		var myRe = new RegExp("\<div class=\"item-info\"\>(.|\\n|\\r)*(\<table\>(.|\\n|\\r)*\<\/table\>)(.|\\n|\\r)*\<div class=\"b-scroll-to\"\>","igm");
+		if (descr = myRe.exec(sOut)){
+			descr[2] = descr[2].replace("&nbsp;"," ");
+			this.pDes[Main.index] = descr[2];
+//			alert(descr[2]);
+		}
+		
+//		alert('----------------------------------');
+		myRe = new RegExp("\<div class=\"item-info\"\>[\\s\\S]*\<p( class=\"item-decription short\")?\>([\\s\\S]*)\<\/p\>[\\s\\S]*\<div class=\"b-scroll-to\"\>","gim");
+		if (descr = myRe.exec(sOut)){
+//			alert(descr[2]);
+			descr[2] = descr[2].replace(new RegExp("([\\s\\S]*)\<\/p\>([\\s\\S]*)",'igm'),"$1");
+			descr[2] = descr[2].replace("&nbsp;"," ");
+			this.pDes[Main.index] += descr[2];
+		}
+//		alert('----------------------------------');
+		
+/*		var myRe = new RegExp("\<div class=\"item-info\"\>\\n\\s*(\<table\>(.|\\n)*\<\/table\>\\n\\n?\\s*)?\<p\>((.|\\n)*)\<\/p\>(.|\\n)*\<div class=\"b-scroll-to\"\>","igm");
+		if (descr = myRe.exec(sOut)){
+			this.pDes[Main.index] = descr[1]+descr[3];
+		}else{
+			alert('----------------------------------');
+			myRe = new RegExp("\<div class=\"item-info\"\>\\n\\s*(\<table\>(.|\\n)*\<\/table\>\\n*\\s*)?\<p class=\"item-decription short\"\>((.|\\n)*)\<\/p\>(.|\\n)*\<p(.|\\n)*\<div class=\"b-scroll-to\"\>","igm");
+			if (descr = myRe.exec(sOut)){
+				alert('----------------------------------');
+				this.pDes[Main.index] = descr[1]+descr[3];
+			}
+		}
+*/
 	}
 };
 
@@ -118,34 +174,38 @@ URLtoXML.ParseXMLData = function() {
 				}
 			}else{
 			
-				var arr = sOut.split('<div class="b-poster-section-detail">');
+				var arr = sOut.split('<div class="b-poster-section ');
 				for (var i in arr) {
-					myRe = new RegExp("\<a class=\"subject-link m-themed\" href=\"(.+)\"\>(.+)\<\/a\>","igm");
-					if (name = myRe.exec(arr[i])){
+					myRe = new RegExp("\<a class=\"subject-link\" href=\"(.+)\"\>","igm");
+					if (url = myRe.exec(arr[i])){
 						index++;
-						this.UrlSt[index] = this.prefixURL + name[1] + '?ajax&folder=0';
-						this.sName[index] = name[2];
+						this.UrlSt[index] = this.prefixURL + url[1];
 						
-						var descr = '';
-						myRe = new RegExp("\<p\>(.*)\<\/p\>","igm");
-						if (vRol = myRe.exec(arr[i])){
-							descr = URLtoXML.DelWords(vRol[1]);
-							descr = URLtoXML.DelTrash(descr);
-							descr = '<span class="vRol">'+descr+'</span><br>';
-						}
-						
-						arr[i] = arr[i].replace(new RegExp("\<br\\s?\/\>(\\s*)?\\r?\\n?","igm"), '<br/>');
-						myRe = new RegExp("\<div class=\"main\"\>\\n.*\\n.*\<img src=\"(.+)\" .* width=.*\/\>\\n.*\\n.*\<div class=\"text\"\>((.|\\n)*)\<\/div\>\\n.*\<\/div\>\\n\<\/div\>","igm");
+						myRe = new RegExp("\<img src=\"(.*)\" alt=\'(.*)\'\/\>","igm");
 						if (img = myRe.exec(arr[i])){
 							this.ImgDickr[index] = img[1];
-							descr += img[2];
-						}else{
-							this.ImgDickr[index] = '';
 						}
-						this.pDes[index] = descr;
+						
+						myRe = new RegExp("\<b class=\"b-poster-info\"\>\\n\\s*((.|\\n)*)\\n\\s+\<b class=\"num \"(.|\\n)*\<\/b\>\\n\\s*\<span\>","igm");
+						quality = '';
+						if (qual = myRe.exec(arr[i])){
+							quality = '<b class="b-poster-info">'+qual[1]+'</b>';
+						}
+						
+						myRe = new RegExp("\<b class=\"subject-link m-full\"\>\\n.*\\n\\s*\<span\>(.*)\<p\>(.*)\<\/p\>\<p\>(.*)\<\/p\>\<\/span\>\\n\\s*\<\/b\>","igm");
+						if (name = myRe.exec(arr[i])){
+							this.sName[index] = name[1]+' '+name[3];
+						}else{
+							myRe = new RegExp("\<b class=\"subject-link m-full\"\>\\n.*\\n\\s*\<span\>(.*)\<p\>(.*)\<\/p\>\<\/span\>\\n\\s*\<\/b\>","igm");
+							if (name = myRe.exec(arr[i])){
+								this.sName[index] = name[1]+' '+name[2];
+							}
+						}
+						
+						this.pDes[index] = '';
 						
 						widgetAPI.putInnerHTML(document.getElementById("title"), this.sName[Main.index]);
-						widgetAPI.putInnerHTML(document.getElementById("bloc" + index), "<img class='blockImage' id='imgst" + index +  "';  src='" + this.ImgDickr[index] + "' />");
+						widgetAPI.putInnerHTML(document.getElementById("bloc" + index), "<img class='blockImage' id='imgst" + index +  "';  src='" + this.ImgDickr[index] + "' />"+quality);
 						document.getElementById("imgst" + Main.index).style.borderColor = "#3399FF"; // активная строка
 					}else{
 						this.UrlSt[index] = '';
