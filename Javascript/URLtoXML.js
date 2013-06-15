@@ -238,7 +238,8 @@ URLtoXML.ParseXMLData = function() {
 				if(this.arrVideoExt.indexOf(sres[3])>-1){
 					index++;
 					this.pName[index] = decodeURIComponent(sres[2].replace(new RegExp("\\+","g"),  " "));
-					this.pUrlSt[index] = sres[1];
+					this.pUrlSt[index] = "http://fs.ua"+sres[1];
+					//this.pUrlSt[index] = sres[1];
 					widgetAPI.putInnerHTML(document.getElementById("str" + index), this.pName[index]);
 				}
 			}
