@@ -59,6 +59,7 @@ Favorites.showItems = function() {
 		for (var i=Main.page*15; i<this.items.length && i<(Main.page+1)*14+1; i++){
 			
 			if (this.items[i].descr){ delete this.items[i].descr; }
+			this.items[i].url = this.items[i].url.replace("?ajax&folder=0","");
 			
 			URLtoXML.ImgDickr[i+1-Main.page*15] = this.items[i].img;
 			URLtoXML.UrlSt[i+1-Main.page*15] = this.items[i].url;
