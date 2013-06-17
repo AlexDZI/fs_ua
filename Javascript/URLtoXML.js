@@ -3,7 +3,7 @@ var URLtoXML = {
 	fMode : false, // режим обмена данными (асинхронный=true синхронный=false)
 
 	// По умолчанию основные параметры определяем для FS.UA
-	prefixURL : "http://fs.ua/",
+	prefixURL : "http://fs.ua",
 
 	nStart : 0, // начальный символ поиска в ответе нужных данных
 
@@ -43,23 +43,6 @@ URLtoXML.deinit = function () {
 
 // обработка ссылки
 URLtoXML.Proceed = function(sURL) {
-
-	if (this.pDes[Main.index]=='' && Main.playlist==1){
-		this.xmlHTTP = null;
-		this.xmlHTTP = new XMLHttpRequest();
-		
-		this.xmlHTTP.open("GET", this.UrlSt[Main.index], false); // ?асинхронно
-
-		this.xmlHTTP.onreadystatechange = function() {
-			if (URLtoXML.xmlHTTP.readyState == 4) {
-				URLtoXML.ParsePageDesctData(); // генерим конечный плейлист на основании полученных данных
-			}
-		};
-		this.xmlHTTP.setRequestHeader("User-Agent","Opera/9.80 (Windows NT 5.1; U; ru) Presto/2.9.168 Version/11.51");
-		this.xmlHTTP.send();
-		this.xmlHTTP = null;
-	}
-
 	this.outTXT = "";// очищаем строку-приемник конечного плейлиста
 
 	if (this.xmlHTTP == null) {// инициализируем связь с интернетом
@@ -79,45 +62,51 @@ URLtoXML.Proceed = function(sURL) {
 		this.xmlHTTP.setRequestHeader("User-Agent","Opera/9.80 (Windows NT 5.1; U; ru) Presto/2.9.168 Version/11.51");
 		this.xmlHTTP.send();
 	}
+	this.getPageDescr();
+};
+
+URLtoXML.getPageDescr = function() {
+	if (this.pDes[Main.index]=='' && Main.playlist==1){
+		this.xmlHTTP = null;
+		this.xmlHTTP = new XMLHttpRequest();
+		
+		this.xmlHTTP.open("GET", this.UrlSt[Main.index], true); // ?асинхронно
+
+		this.xmlHTTP.onreadystatechange = function() {
+			if (URLtoXML.xmlHTTP && URLtoXML.xmlHTTP.readyState == 4) {
+				URLtoXML.ParsePageDesctData(); // генерим конечный плейлист на основании полученных данных
+			}
+		};
+		this.xmlHTTP.setRequestHeader("User-Agent","Opera/9.80 (Windows NT 5.1; U; ru) Presto/2.9.168 Version/11.51");
+		this.xmlHTTP.send();
+	}
 };
 
 URLtoXML.ParsePageDesctData = function() {
 	var sOut;
 	if (this.xmlHTTP.status == 200){
-		// сразу удаляем переводы строк для удобного поиска
 		sOut = this.xmlHTTP.responseText;
 		
 //		alert('----------------------------------');
 		var descr;
-		var myRe = new RegExp("\<div class=\"item-info\"\>(.|\\n|\\r)*(\<table\>(.|\\n|\\r)*\<\/table\>)(.|\\n|\\r)*\<div class=\"b-scroll-to\"\>","igm");
+		var myRe = new RegExp("\<div class=\"b-info\"\>[\\s\\S]*\<div class=\"item-info\"\>[\\s\\S]*(\<table\>[\\s\\S]*\<\/table\>)[\\n\\s\\r]*\<p( class=\"item-decription short\")?\>([\\s\\S]*)\<\/p\>[\\s\\S]*\<div class=\"b-scroll-to\"\>","igm");
 		if (descr = myRe.exec(sOut)){
-			descr[2] = descr[2].replace("&nbsp;"," ");
-			this.pDes[Main.index] = descr[2];
-//			alert(descr[2]);
-		}
-		
-//		alert('----------------------------------');
-		myRe = new RegExp("\<div class=\"item-info\"\>[\\s\\S]*\<p( class=\"item-decription short\")?\>([\\s\\S]*)\<\/p\>[\\s\\S]*\<div class=\"b-scroll-to\"\>","gim");
-		if (descr = myRe.exec(sOut)){
-//			alert(descr[2]);
-			descr[2] = descr[2].replace(new RegExp("([\\s\\S]*)\<\/p\>([\\s\\S]*)",'igm'),"$1");
-			descr[2] = descr[2].replace("&nbsp;"," ");
-			this.pDes[Main.index] += descr[2];
-		}
-//		alert('----------------------------------');
-		
-/*		var myRe = new RegExp("\<div class=\"item-info\"\>\\n\\s*(\<table\>(.|\\n)*\<\/table\>\\n\\n?\\s*)?\<p\>((.|\\n)*)\<\/p\>(.|\\n)*\<div class=\"b-scroll-to\"\>","igm");
-		if (descr = myRe.exec(sOut)){
+			descr[1] = descr[1].replace("&nbsp;"," ");
+			descr[3] = descr[3].replace(new RegExp("([\\s\\S]*)\<\/p\>([\\s\\S]*)",'igm'),"$1");
+			
 			this.pDes[Main.index] = descr[1]+descr[3];
-		}else{
+			this.pDes[Main.index] = this.pDes[Main.index].replace("&nbsp;"," ");
+			
+			widgetAPI.putInnerHTML(document.getElementById("description"),
+				"<img align='left' style='border-style: solid; border-width:1px; border-color:#3399FF; margin:6px 10px 8px 3px; max-width: 200px; max-height: 200px; border-radius:5px; box-shadow:0 0 13px black;' src='"
+					+ this.ImgDickr[Main.index] + "'/>"
+					+ this.pDes[Main.index]);
+/*			alert(descr[1]);
 			alert('----------------------------------');
-			myRe = new RegExp("\<div class=\"item-info\"\>\\n\\s*(\<table\>(.|\\n)*\<\/table\>\\n*\\s*)?\<p class=\"item-decription short\"\>((.|\\n)*)\<\/p\>(.|\\n)*\<p(.|\\n)*\<div class=\"b-scroll-to\"\>","igm");
-			if (descr = myRe.exec(sOut)){
-				alert('----------------------------------');
-				this.pDes[Main.index] = descr[1]+descr[3];
-			}
-		}
+			alert(descr[3]);
 */
+		}
+//		alert('----------------------------------');
 	}
 };
 
@@ -128,7 +117,6 @@ URLtoXML.ParseXMLData = function() {
 
 	if (this.xmlHTTP.status == 200)// если ответ от сервера корректный
 	{
-		// сразу удаляем переводы строк для удобного поиска
 		sOut = this.xmlHTTP.responseText;
 		
 		var myRe;
