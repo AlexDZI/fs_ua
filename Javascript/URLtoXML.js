@@ -20,7 +20,7 @@ var URLtoXML = {
 
 	pUrlSt : new Array(),
 
-	arrVideoExt : ["avi", "asf", "asx", "3gp","3g2", "3gp2", "3gpp", "flv", "mp4", "mp4v", "m4v", "m2v","m2ts", "m2t", "mp2v", "mov", "mpg", "mpe", "mpeg", "mkv","swf", "mts", "wm", "wmx", "wmv", "vob", "iso", "f4v", "ts", "flac", "mp3", "dts", "ac3"],
+	arrVideoExt : ["avi", "asf", "asx", "3gp","3g2", "3gp2", "3gpp", "flv", "mp4", "mp4v", "m4v", "m2v","m2ts", "m2t", "mp2v", "mov", "mpg", "mpe", "mpeg", "mkv","swf", "mts", "wm", "wmx", "wmv", "vob", "iso", "f4v", "ts", "flac", "mp3", "dts", "ac3", "divx"],
    
    //двумерный массив строк, которые нужно заменить в тексте - первый вариант на второй
    arrReplWordsDesc : [["h1>", "b>"], ["</*p>","<br>"], ["\\s*<br>\\s*<br>", "<br>"], ["</*p>","</*p>"]],
