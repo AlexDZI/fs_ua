@@ -4,8 +4,8 @@
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
 
 <title>FS.ua</title>
-<link rel="stylesheet" type="text/css" href="http://penappu.com.ua/fs_ua/CSS/Main.css"></link>
-<link rel="stylesheet" type="text/css" href="http://penappu.com.ua/fs_ua/CSS/flags.css"></link>
+<link rel="stylesheet" type="text/css" href="http://penappu.com.ua/fs_ua1/CSS/Main.css"></link>
+<link rel="stylesheet" type="text/css" href="http://penappu.com.ua/fs_ua1/CSS/flags.css"></link>
 
 <script type="text/javascript" language="javascript" src="$MANAGER_WIDGET/Common/API/Plugin.js"></script>
 <script type="text/javascript" language="javascript" src="$MANAGER_WIDGET/Common/API/Widget.js"></script>
@@ -22,14 +22,13 @@
 <script type="text/javascript" language="javascript" src="$MANAGER_WIDGET/Common/API/CM_AVSetting.js"></script>
   -->
 
-<script language="javascript" type="text/javascript" src="http://penappu.com.ua/fs_ua/javascript/Main.js"></script>
-<script language="javascript" type="text/javascript" src="http://penappu.com.ua/fs_ua/javascript/Search.js"></script>
-<script language="javascript" type="text/javascript" src="http://penappu.com.ua/fs_ua/javascript/URLtoXML.js"></script>
-<script language="javascript" type="text/javascript" src="http://penappu.com.ua/fs_ua/javascript/Player.js"></script>
-<script language="javascript" type="text/javascript" src="http://penappu.com.ua/fs_ua/javascript/Audio.js"></script>
-<script language="javascript" type="text/javascript" src="http://penappu.com.ua/fs_ua/javascript/Display.js"></script>
-<script language="javascript" type="text/javascript" src="http://penappu.com.ua/fs_ua/javascript/Favorites.js"></script>
-
+<script language="javascript" type="text/javascript" src="http://penappu.com.ua/fs_ua1/script/Main.js"></script>
+<script language="javascript" type="text/javascript" src="http://penappu.com.ua/fs_ua1/script/Search.js"></script>
+<script language="javascript" type="text/javascript" src="http://penappu.com.ua/fs_ua1/script/URLtoXML.js"></script>
+<script language="javascript" type="text/javascript" src="http://penappu.com.ua/fs_ua1/script/Player.js"></script>
+<script language="javascript" type="text/javascript" src="http://penappu.com.ua/fs_ua1/script/Audio.js"></script>
+<script language="javascript" type="text/javascript" src="http://penappu.com.ua/fs_ua1/script/Display.js"></script>
+<script language="javascript" type="text/javascript" src="http://penappu.com.ua/fs_ua1/script/Favorites.js"></script>
 
 <OBJECT id="PluginSef" border="0" classid="clsid:SAMSUNG-INFOLINK-SEF"></object>
 <object id="pluginPlayer" border=0 classid="clsid:SAMSUNG-INFOLINK-PLAYER"></object>
@@ -49,6 +48,7 @@
 <body onload="Main.onLoad();" onunload="Main.onUnload();">
    <script type="text/javascript" language="javascript" src="$MANAGER_WIDGET/Common/IME/ime2.js"></script>
 	<a href="javascript:void(0);" id="anchor" onkeydown="Main.keyDown();"></a>
+	<div id="loading" style="display:none;"><img src="http://penappu.com.ua/fs_ua1/images/processing.gif"></div>
 	<div id="main">
 		<div id="spisok">
 			<div id="janr"><!--Категория: &nbsp;&nbsp;&nbsp;&nbsp; -->Фильмы <span style="color:#3399FF; font-size:15px;">(по дате)</span></div>
@@ -78,6 +78,7 @@
 			</div>
 		</div>
 		<div id="playlist">
+			<div id="loadingDescr"><img src="http://penappu.com.ua/fs_ua1/images/processing.gif"></div>
 			<div id="description"></div>
 			<div id="descript"></div>
 			<div id="list">
@@ -294,81 +295,81 @@
 			<input id="plainText" type="text" size="30" />
 		</form>
 		<div id="help_line_1" style="display:none;">
-			<div id="HelpLineButton" style="margin-right:0px;"><img class="blueBtn"></div>
+			<div id="HelpLineButton" style="margin-right:0px;"><img src="images/buttons/blue_.png"></img></div>
 			<span id="HelpLineText">Сортировка</span>
-			<div id="HelpLineButton"><img class="toolsBtn"></div>
+			<div id="HelpLineButton"><img src="images/buttons/tools_.png"></img></div>
 			<span id="HelpLineText">Поиск</span>
-			<div id="HelpLineButton"><img class="digitBtn"></div>
+			<div id="HelpLineButton"><img src="images/buttons/0_9_.png"></img></div>
 			<span id="HelpLineText">Категория</span>
-			<div id="HelpLineButton"><img class="naviBtn"></div>
+			<div id="HelpLineButton"><img src="images/buttons/move_.png"></img></div>
 			<span id="HelpLineText">Навигация</span>
-			<div id="HelpLineButton"><img class="enterBtn"></div>
+			<div id="HelpLineButton"><img src="images/buttons/enter_.png"></img></div>
 			<span id="HelpLineText">Выбор</span>
-			<div id="HelpLineButton"><img class="chListBtn"></div>
+			<div id="HelpLineButton"><img src="images/buttons/chlist.png"></img></div>
 			<span id="HelpLineText">Избранное</span>
-			<div id="HelpLineButton"><img class="enterBtn"></div>
+			<div id="HelpLineButton"><img src="images/buttons/exit_.png"></img></div>
 			<span id="HelpLineText">Выход</span>
 		</div>
 		<div id="help_line_2" style="display:none;">
-			<div id="HelpLineButton"><img class="yellowBtn"></div>
+			<div id="HelpLineButton"><img src="images/buttons/Yellow.png"></img></div>
 			<span id="HelpLineText">Добавить в Избр.</span>
-			<div id="HelpLineButton"><img class="pSizeBtn"><img class="blueBtn"></div>
+			<div id="HelpLineButton"><img src="images/buttons/psize_.png" ></img><img src="images/buttons/blue_.png"></img></div>
 			<span id="HelpLineText">Формат изображения</span>
-			<div id="HelpLineButton"><img class="lrBtn"></div>
+			<div id="HelpLineButton"><img src="images/buttons/lr_.png"></img></div>
 			<span id="HelpLineText">Перемотка 2 мин</span>
-			<div id="HelpLineButton"><img class="llrrBtn"></div>
+			<div id="HelpLineButton"><img src="images/buttons/llrr_.png"></img></div>
 			<span id="HelpLineText">Перемотка 30 сек</span>
-			<div id="HelpLineButton"><img class="enterBtn"></div>
+			<div id="HelpLineButton"><img src="images/buttons/enter_.png"></img></div>
 			<span id="HelpLineText">Выбор</span>
-			<div id="HelpLineButton"><img class="enterBtn"></div>
+			<div id="HelpLineButton"><img src="images/buttons/exit_.png"></img></div>
 			<span id="HelpLineText">Выход</span>
 		</div>
 		<div id="help_line_2_1" style="display:none;">
-			<div id="HelpLineButton"><img class="yellowBtn"></div>
+			<div id="HelpLineButton"><img src="images/buttons/Yellow.png"></img></div>
 			<span id="HelpLineText">Удалить из Избр.</span>
-			<div id="HelpLineButton"><img class="pSizeBtn"><img class="blueBtn"></div>
+			<div id="HelpLineButton"><img src="images/buttons/psize_.png" ></img><img src="images/buttons/blue_.png"></img></div>
 			<span id="HelpLineText">Формат изображения</span>
-			<div id="HelpLineButton"><img class="lrBtn"></div>
+			<div id="HelpLineButton"><img src="images/buttons/lr_.png"></img></div>
 			<span id="HelpLineText">Перемотка 2 мин</span>
-			<div id="HelpLineButton"><img class="llrrBtn"></div>
+			<div id="HelpLineButton"><img src="images/buttons/llrr_.png"></img></div>
 			<span id="HelpLineText">Перемотка 30 сек</span>
-			<div id="HelpLineButton"><img class="enterBtn"></div>
+			<div id="HelpLineButton"><img src="images/buttons/enter_.png"></img></div>
 			<span id="HelpLineText">Выбор</span>
-			<div id="HelpLineButton"><img class="enterBtn"></div>
+			<div id="HelpLineButton"><img src="images/buttons/exit_.png"></img></div>
 			<span id="HelpLineText">Выход</span>
 		</div>
 		<div id="help_line_3" style="display:none;">
-			<div id="HelpLineButton"><img class="lrBtn"></div>
+			<div id="HelpLineButton"><img src="images/buttons/lr_.png"></img></div>
 			<span id="HelpLineText">Call the IME</span>
-			<div id="HelpLineButton"><img class="enterBtn"></div>
+			<div id="HelpLineButton"><img src="images/buttons/enter_.png"></img></div>
 			<span id="HelpLineText">Выполнить поиск</span>
-			<div id="HelpLineButton"><img class="backBtn"></div>
+			<div id="HelpLineButton"><img src="images/buttons/back_.png"></img></div>
 			<span id="HelpLineText">Возврат</span>
 		</div>
 		<div id="help_line_4" style="display:none;">
-			<div id="HelpLineButton"><img class="yellowBtn"></div>
+			<div id="HelpLineButton"><img src="images/buttons/Yellow.png"></img></div>
 			<span id="HelpLineText">Удалить из Избр.</span>
-			<div id="HelpLineButton"><img class="toolsBtn"></div>
+			<div id="HelpLineButton"><img src="images/buttons/tools_.png"></img></div>
 			<span id="HelpLineText">Поиск</span>
-			<div id="HelpLineButton"><img class="digitBtn"></div>
+			<div id="HelpLineButton"><img src="images/buttons/0_9_.png"></img></div>
 			<span id="HelpLineText">Категория</span>
-			<div id="HelpLineButton"><img class="naviBtn"></div>
+			<div id="HelpLineButton"><img src="images/buttons/move_.png"></img></div>
 			<span id="HelpLineText">Навигация</span>
-			<div id="HelpLineButton"><img class="enterBtn"></div>
+			<div id="HelpLineButton"><img src="images/buttons/enter_.png"></img></div>
 			<span id="HelpLineText">Выбор</span>
-			<div id="HelpLineButton"><img class="enterBtn"></div>
+			<div id="HelpLineButton"><img src="images/buttons/exit_.png"></img></div>
 			<span id="HelpLineText">Выход</span>
 		</div>
 		<div id="help_line_5" style="display:none;">
-			<div id="HelpLineButton"><img class="toolsBtn"></div>
+			<div id="HelpLineButton"><img src="images/buttons/tools_.png"></img></div>
 			<span id="HelpLineText">Поиск</span>
-			<div id="HelpLineButton"><img class="digitBtn"></div>
+			<div id="HelpLineButton"><img src="images/buttons/0_9_.png"></img></div>
 			<span id="HelpLineText">Категория</span>
-			<div id="HelpLineButton"><img class="naviBtn"></div>
+			<div id="HelpLineButton"><img src="images/buttons/move_.png"></img></div>
 			<span id="HelpLineText">Навигация</span>
-			<div id="HelpLineButton"><img class="enterBtn"></div>
+			<div id="HelpLineButton"><img src="images/buttons/enter_.png"></img></div>
 			<span id="HelpLineText">Выбор</span>
-			<div id="HelpLineButton"><img class="enterBtn"></div>
+			<div id="HelpLineButton"><img src="images/buttons/exit_.png"></img></div>
 			<span id="HelpLineText">Выход</span>
 		</div>
 	</div>
@@ -378,17 +379,17 @@
         </div>
         <div class="p_second_line">
             <div id="help_navi_l_player" style="">
-                <div id="screen_size"><div id="navi_button"><img class="pSizeBtn1"><img class="udBtn"></div><span id="navi_helpertext"></span></div>
+                <div id="screen_size"><div id="navi_button"><img src="images/buttons/psize.png"><img src="images/buttons/ud.png"></div><span id="navi_helpertext"></span></div>
             </div>
         </div>
         <div class="p_third_line">
             <div id="help_navi_player" style="">
-                <div id="but_pause" style="display:none"><div id="navi_button"><img class="pauseBtn"></div><span id="navi_helpertext"></span></div>
-                <div id="but_play"><div id="navi_button"><img class="playBtn"></div><span id="navi_helpertext"></span></div>
-				<div id="but_rew"><img class="rewBtn"></div><span id="navi_helpertext"></span>
-				<div id="but_ff"><img class="ffBtn"></div><span id="navi_helpertext"></span>
-				<div id="but_psize"><img class="pSizeBtn1"></div><span id="navi_helpertext"></span>
-				<div id="but_info"><img class="infoBtn"></div><span id="navi_helpertext"></span>
+                <div id="but_pause" style="display:none"><div id="navi_button"><img src="images/buttons/pause.png"></img></div><span id="navi_helpertext"></span></div>
+                <div id="but_play"><div id="navi_button"><img src="images/buttons/play.png"></img></div><span id="navi_helpertext"></span></div>
+				<div id="but_rew"><img src="images/buttons/rew.png"></img></div><span id="navi_helpertext"></span>
+				<div id="but_ff"><img src="images/buttons/ff.png"></img></div><span id="navi_helpertext"></span>
+				<div id="but_psize"><img src="images/buttons/psize.png"></img></div><span id="navi_helpertext"></span>
+				<div id="but_info"><img src="images/buttons/info.png"></img></div><span id="navi_helpertext"></span>
                 <div id="navi_button"></div><span id="navi_helpertext"></span>
             </div> 
         </div>
