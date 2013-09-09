@@ -3,7 +3,7 @@ var URLtoXML = {
 	fMode : false, // режим обмена данными (асинхронный=true синхронный=false)
 
 	// По умолчанию основные параметры определяем для FS.UA
-	prefixURL : "http://fs.ua/",
+	prefixURL : sFSRootUrl,
 
 	nStart : 0, // начальный символ поиска в ответе нужных данных
 
@@ -29,6 +29,7 @@ var URLtoXML = {
    arrDelWords : ["<\\s*a[^<^>]*>", "<\\s*/\\s*a\\s*>", "<\\s*/*\\s*span[^>]*>", "<\\s*/*\\s*div[^>]*>", "<\\s*/*\\s*img[^>]*>", "<\\s*/*\\s*strong[^>]*>"],
    prefixTAG : "<a href='",
    endedTAG : "'>",
+   mpHttpResponseParser : null
 
 };
 
@@ -39,6 +40,10 @@ URLtoXML.deinit = function () {
 	if (this.xmlHTTP ) {
 		this.xmlHTTP.abort();
 	}
+};
+
+URLtoXML.SetHtmlParser = function(pHtmlParser){
+	URLtoXML.mpHttpResponseParser = pHtmlParser;
 };
 
 // обработка ссылки
@@ -56,7 +61,12 @@ URLtoXML.Proceed = function(sURL) {
 
 		this.xmlHTTP.onreadystatechange = function() {
 			if (URLtoXML.xmlHTTP.readyState == 4) {
-				URLtoXML.outTXT = URLtoXML.ParseXMLData(); // генерим конечный плейлист на основании полученных данных
+				if(URLtoXML.mpHttpResponseParser != null){
+					URLtoXML.mpHttpResponseParser();
+					URLtoXML.mpHttpResponseParser = null;
+				}
+				else		
+					URLtoXML.outTXT = URLtoXML.ParseXMLData(); // генерим конечный плейлист на основании полученных данных
 			}
 		};
 
@@ -238,7 +248,7 @@ URLtoXML.ParseXMLData = function() {
 				if(this.arrVideoExt.indexOf(sres[3])>-1){
 					index++;
 					this.pName[index] = decodeURIComponent(sres[2].replace(new RegExp("\\+","g"),  " "));
-					this.pUrlSt[index] = "http://fs.ua"+sres[1];
+					this.pUrlSt[index] = sFSRootUrl + sres[1];
 					//this.pUrlSt[index] = sres[1];
 					widgetAPI.putInnerHTML(document.getElementById("str" + index), this.pName[index]);
 				}
