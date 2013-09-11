@@ -4,7 +4,6 @@ var pluginAPI = new Common.API.Plugin();
 var currentFSMode = 2; 
 var maxFSMode = 3;
 var currentStatusLineText="";
-var sFSRootUrl = "http://fs.to";
 
 var FS_Category = 
 {
@@ -20,6 +19,9 @@ var FS_Category =
     ALBUMS : 9					// Альбомы
 };
 
+var FS_CategoryWords = ["Саундтреки", "Фильмы", "Мультфильмы", "Клипы", "Сериалы",
+                        "Мультсериалы", "Телепередачи", "Концерты", "Сборники", "Альбомы"];
+
 showHandler = function() {
 // procedure OK
 	// Стандартный индикатор громкости
@@ -30,7 +32,7 @@ showHandler = function() {
 	pluginAPI.setOffScreenSaver();
 };
 var Main = {
-	version_vidget : "0.3.10",
+	version_vidget : "0.3.9",
 	mode : 0, // состояние полноэкранного режима
 	WINDOW : 0,
 	FULLSCREEN : 1,
@@ -40,11 +42,12 @@ var Main = {
 	smeh : 5, // смещение при перемещении верх-низ на странице
 	page : 0, // номер строки с общими списками
 
-	listRowsPerPage : 19,
+	listRowsPerPage : 21,
 	playlist : 0,
 	sta : 0, // пауза или играть с начала
 
-	janrURL : sFSRootUrl + "/video/films/",
+	prefixURL : "http://fs.to",
+	janrURL : "http://fs.to/video/films/",
 	janrText : "Фильмы",
 //	janrURL : "http://fs.ua/video/films/search.aspx?search=revenge",
 	search : false, // search : false, search : true,
@@ -99,7 +102,7 @@ Main.onLoad = function() {
 		if(this.search){
 			this.sURL = this.janrURL;
 		}else{
-			this.sURL = this.janrURL + '?page=' + this.page + '&view=detailed&sort='+Main.getSortPar();
+			this.sURL = this.janrURL + '?page=' + this.page + '&sort='+Main.getSortPar();
 		}
 
 		URLtoXML.Proceed(this.sURL);
@@ -158,7 +161,7 @@ Main.keyDown = function() {
 		if ((Player.getState() == Player.PLAYING || Player.getState() == Player.PAUSED) && this.mode == this.FULLSCREEN)
 			Player.PercentJump(1);
 		if (this.playlist == 0){
-			Main.NewJanr(sFSRootUrl + "/video/films/", "Фильмы");
+			Main.NewJanr(this.prefixURL + "/video/films/", "Фильмы");
 			Main.mnCurrentCategory = FS_Category.FILMS;
 		}
 		break;
@@ -166,56 +169,56 @@ Main.keyDown = function() {
 		if ((Player.getState() == Player.PLAYING || Player.getState() == Player.PAUSED) && this.mode == this.FULLSCREEN)
 			Player.PercentJump(2);
 		if (this.playlist == 0){
-			Main.NewJanr(sFSRootUrl + "/video/cartoons/", "Мультфильмы");
+			Main.NewJanr(this.prefixURL + "/video/cartoons/", "Мультфильмы");
 			Main.mnCurrentCategory = FS_Category.CARTOONS;
 		}
 		break;
 	case tvKey.KEY_3:
 		if (this.playlist == 0){
-			Main.NewJanr(sFSRootUrl + "/video/clips/", "Клипы");
+			Main.NewJanr(this.prefixURL + "/video/clips/", "Клипы");
 			Main.mnCurrentCategory = FS_Category.CLIPS;
 		}
 		break;
 	case tvKey.KEY_4:
 		if (this.playlist == 0){
-			Main.NewJanr(sFSRootUrl + "/video/serials/", "Сериалы");
+			Main.NewJanr(this.prefixURL + "/video/serials/", "Сериалы");
 			Main.mnCurrentCategory = FS_Category.SOAP_OPERAS;
 		}
 		break;
 	case tvKey.KEY_5:
 		
 		if (this.playlist == 0){
-			Main.NewJanr(sFSRootUrl + "/video/cartoonserials/", "Мультсериалы");
+			Main.NewJanr(this.prefixURL + "/video/cartoonserials/", "Мультсериалы");
 			Main.mnCurrentCategory = FS_Category.THE_ANIMATED_SERIES;
 		}
 		break;
 	case tvKey.KEY_6:
 		if (this.playlist == 0){
-			Main.NewJanr(sFSRootUrl + "/video/tvshow/", "Телепередачи");
+			Main.NewJanr(this.prefixURL + "/video/tvshow/", "Телепередачи");
 			Main.mnCurrentCategory = FS_Category.TV_SHOWS;
 		}
 		break;
 	case tvKey.KEY_7:
 		if (this.playlist == 0){
-			Main.NewJanr(sFSRootUrl + "/video/concerts/", "Концерты");
+			Main.NewJanr(this.prefixURL + "/video/concerts/", "Концерты");
 			Main.mnCurrentCategory = FS_Category.CONCERTS;
 		}
 		break;
 	case tvKey.KEY_8:
 		if (this.playlist == 0){
-			Main.NewJanr(sFSRootUrl + "/audio/collections/", "Сборники");
+			Main.NewJanr(this.prefixURL + "/audio/collections/", "Сборники");
 			Main.mnCurrentCategory = FS_Category.COLLECTIONS;
 		}
 		break;
 	case tvKey.KEY_9:
 		if (this.playlist == 0){
-			Main.NewJanr(sFSRootUrl + "/audio/albums/", "Альбомы");
+			Main.NewJanr(this.prefixURL + "/audio/albums/", "Альбомы");
 			Main.mnCurrentCategory = FS_Category.ALBUMS;
 		}
 		break;
 	case tvKey.KEY_0:
 		if (this.playlist == 0){
-			Main.NewJanr(sFSRootUrl + "/audio/soundtracks/", "Саундтреки");
+			Main.NewJanr(this.prefixURL + "/audio/soundtracks/", "Саундтреки");
 			Main.mnCurrentCategory = FS_Category.SOUND_TRACKS;
 		}
 		break;
@@ -359,7 +362,7 @@ Main.keyDown = function() {
 
 			if (URLtoXML.folders.length==0){
 //				this.sURL = URLtoXML.UrlSt[this.index]; // адрес страницы альбома
-				URLtoXML.Proceed(URLtoXML.UrlSt[this.index]);
+				URLtoXML.Proceed(URLtoXML.UrlSt[this.index]+'?ajax&folder=0');
 			}else{
 				var currIDX = URLtoXML.folders[URLtoXML.folders.length-1].currIdx-1;
 				URLtoXML.Proceed(URLtoXML.folders[URLtoXML.folders.length-1].urls[currIDX]);
@@ -369,6 +372,11 @@ Main.keyDown = function() {
 		if(Main.mbInDevelopment)
 		{
 			Main.mbInDevelopment = false;
+		}
+		
+		if(Main.mbIsCategories)
+		{
+			Main.mbIsCategories = false;	
 		}
 		
 		break;
@@ -477,7 +485,7 @@ Main.keyDown = function() {
 			}
 
 			URLtoXML.xmlHTTP = null;
-			URLtoXML.Proceed(URLtoXML.UrlSt[this.index]);
+			URLtoXML.Proceed(URLtoXML.UrlSt[this.index]+'?ajax&folder=0');
 			document.getElementById("spisok").style.display = "none";
 			document.getElementById("playlist").style.display = "block";
 			document.getElementById("descript").style.display = "block";
@@ -546,12 +554,17 @@ Main.NewString = function(per, a) {
 	} else if (Favorites.isVisible) {
 		return Favorites.changePage();
 	}else{
+		widgetAPI.putInnerHTML(document.getElementById("title"), "");
+/*		for ( var h = 1; h <= 20; h++) {
+			widgetAPI.putInnerHTML(document.getElementById("bloc" + h), "");
+		}
+*/		
 		URLtoXML.xmlHTTP = null;
 		
 		if (this.search){
 			this.sURL += '&page=' + this.page;
 		}else{
-			this.sURL = this.janrURL + '?view=detailed&page=' + this.page + '&sort='+Main.getSortPar(); // жанр
+			this.sURL = this.janrURL + '?page=' + this.page + '&sort='+Main.getSortPar(); // жанр
 		}
 		// +
 		// страница
@@ -680,11 +693,13 @@ Main.NewJanr = function(janr, text) {
 	Main.setResSimple();
 	Main.clearBlocks();
 	
+	this.page = 0;
+	
 	this.janrURL = janr;
 	this.janrText = text;
 	
 	URLtoXML.xmlHTTP = null;
-	this.sURL = janr + '?view=detailed&page=' + this.page + '&sort='+Main.getSortPar(); // жанр +
+	this.sURL = janr + '?page=' + this.page + '&sort='+Main.getSortPar(); // жанр +
 	// страница
 	URLtoXML.Proceed(this.sURL);
 	widgetAPI.putInnerHTML(document.getElementById("janr"), text+" <span style=\"color:#3399FF; font-size:15px;\">("+Main.getSortText()+")</span>");
@@ -770,4 +785,20 @@ Main.sortSelectNext = function(){
 		this.sort=0;
 	}
 	Main.NewJanr(this.janrURL, this.janrText);
+};
+
+Main.showLoading = function(type){
+	if (type){
+		document.getElementById("loadingDescr").style.display = "";
+	}else{
+		document.getElementById("loading").style.display = "";
+	}
+};
+
+Main.hideLoading = function(type){
+	if (type){
+		document.getElementById("loadingDescr").style.display = "none";
+	}else{
+		document.getElementById("loading").style.display = "none";
+	}
 };

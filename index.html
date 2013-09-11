@@ -22,14 +22,14 @@
 <script type="text/javascript" language="javascript" src="$MANAGER_WIDGET/Common/API/CM_AVSetting.js"></script>
   -->
 
-<script language="javascript" type="text/javascript" src="Javascript/Main.js"></script>
-<script language="javascript" type="text/javascript" src="Javascript/Search.js"></script>
-<script language="javascript" type="text/javascript" src="Javascript/URLtoXML.js"></script>
-<script language="javascript" type="text/javascript" src="javascript/Player.js"></script>
-<script language="javascript" type="text/javascript" src="javascript/Audio.js"></script>
-<script language="javascript" type="text/javascript" src="Javascript/Display.js"></script>
-<script language="javascript" type="text/javascript" src="Javascript/Favorites.js"></script>
-<script language="javascript" type="text/javascript" src="Javascript/FS_Genres.js"></script>
+<script language="javascript" type="text/javascript" src="script/Main.js"></script>
+<script language="javascript" type="text/javascript" src="script/Search.js"></script>
+<script language="javascript" type="text/javascript" src="script/URLtoXML.js"></script>
+<script language="javascript" type="text/javascript" src="script/Player.js"></script>
+<script language="javascript" type="text/javascript" src="script/Audio.js"></script>
+<script language="javascript" type="text/javascript" src="script/Display.js"></script>
+<script language="javascript" type="text/javascript" src="script/Favorites.js"></script>
+<script language="javascript" type="text/javascript" src="script/FS_Genres.js"></script>
 
 <OBJECT id="PluginSef" border="0" classid="clsid:SAMSUNG-INFOLINK-SEF"></object>
 <object id="pluginPlayer" border=0 classid="clsid:SAMSUNG-INFOLINK-PLAYER"></object>
@@ -49,6 +49,7 @@
 <body onload="Main.onLoad();" onunload="Main.onUnload();">
    <script type="text/javascript" language="javascript" src="$MANAGER_WIDGET/Common/IME/ime2.js"></script>
 	<a href="javascript:void(0);" id="anchor" onkeydown="Main.keyDown();"></a>
+	<div id="loading" style="display:none;"><img src="http://penappu.com.ua/fs_ua1/images/processing.gif"></div>
 	<div id="main">
 		<div id="spisok">
 			<div id="janr"><!--Категория: &nbsp;&nbsp;&nbsp;&nbsp; -->Фильмы <span style="color:#3399FF; font-size:15px;">(по дате)</span></div>
@@ -78,6 +79,7 @@
 			</div>
 		</div>
 		<div id="playlist">
+			<div id="loadingDescr"><img src="http://penappu.com.ua/fs_ua1/images/processing.gif"></div>
 			<div id="description"></div>
 			<div id="descript"></div>
 			<div id="list">
@@ -366,6 +368,14 @@
 			<span id="HelpLineText">Поиск</span>
 			<div id="HelpLineButton"><img src="images/buttons/0_9_.png"></img></div>
 			<span id="HelpLineText">Категория</span>
+			<div id="HelpLineButton"><img src="images/buttons/move_.png"></img></div>
+			<span id="HelpLineText">Навигация</span>
+			<div id="HelpLineButton"><img src="images/buttons/enter_.png"></img></div>
+			<span id="HelpLineText">Выбор</span>
+			<div id="HelpLineButton"><img src="images/buttons/exit_.png"></img></div>
+			<span id="HelpLineText">Выход</span>
+		</div>
+		<div id="help_line_for_genres_page" style="display:none;">
 			<div id="HelpLineButton"><img src="images/buttons/move_.png"></img></div>
 			<span id="HelpLineText">Навигация</span>
 			<div id="HelpLineButton"><img src="images/buttons/enter_.png"></img></div>
