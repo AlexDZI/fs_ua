@@ -1,13 +1,11 @@
 var URLtoXML = {
 	outTXT : "",// строка, куда соберем список
-	fMode : false, // режим обмена данными (асинхронный=true синхронный=false)
-
-	// По умолчанию основные параметры определяем для FS.UA
-	prefixURL : "http://fs.ua/",
+	fMode : true, // режим обмена данными (асинхронный=true синхронный=false)
 
 	nStart : 0, // начальный символ поиска в ответе нужных данных
 
 	xmlHTTP : null,
+	xmlHTTPDescr : null,
 
 	sName : new Array(), // имя файла
 	UrlSt : new Array(), // адрес
@@ -20,7 +18,7 @@ var URLtoXML = {
 
 	pUrlSt : new Array(),
 
-	arrVideoExt : ["avi", "asf", "asx", "3gp","3g2", "3gp2", "3gpp", "flv", "mp4", "mp4v", "m4v", "m2v","m2ts", "m2t", "mp2v", "mov", "mpg", "mpe", "mpeg", "mkv","swf", "mts", "wm", "wmx", "wmv", "vob", "iso", "f4v", "ts", "flac", "mp3", "dts", "ac3"],
+	arrVideoExt : ["avi", "asf", "asx", "3gp","3g2", "3gp2", "3gpp", "flv", "mp4", "mp4v", "m4v", "m2v","m2ts", "m2t", "mp2v", "mov", "mpg", "mpe", "mpeg", "mkv","swf", "mts", "wm", "wmx", "wmv", "vob", "iso", "f4v", "ts", "flac", "mp3", "dts", "ac3", "divx"],
    
    //двумерный массив строк, которые нужно заменить в тексте - первый вариант на второй
    arrReplWordsDesc : [["h1>", "b>"], ["</*p>","<br>"], ["\\s*<br>\\s*<br>", "<br>"], ["</*p>","</*p>"]],
@@ -29,6 +27,7 @@ var URLtoXML = {
    arrDelWords : ["<\\s*a[^<^>]*>", "<\\s*/\\s*a\\s*>", "<\\s*/*\\s*span[^>]*>", "<\\s*/*\\s*div[^>]*>", "<\\s*/*\\s*img[^>]*>", "<\\s*/*\\s*strong[^>]*>"],
    prefixTAG : "<a href='",
    endedTAG : "'>",
+   mpHttpResponseParser : null
 
 };
 
@@ -41,12 +40,17 @@ URLtoXML.deinit = function () {
 	}
 };
 
+URLtoXML.SetHtmlParser = function(pHtmlParser){
+	URLtoXML.mpHttpResponseParser = pHtmlParser;
+};
+
 // обработка ссылки
 URLtoXML.Proceed = function(sURL) {
-
 	this.outTXT = "";// очищаем строку-приемник конечного плейлиста
 
 	if (this.xmlHTTP == null) {// инициализируем связь с интернетом
+		Main.showLoading();
+		
 		this.xmlHTTP = new XMLHttpRequest();
 
 		this.xmlHTTP.url = sURL;
@@ -56,12 +60,69 @@ URLtoXML.Proceed = function(sURL) {
 
 		this.xmlHTTP.onreadystatechange = function() {
 			if (URLtoXML.xmlHTTP.readyState == 4) {
-				URLtoXML.outTXT = URLtoXML.ParseXMLData(); // генерим конечный плейлист на основании полученных данных
+				if(URLtoXML.mpHttpResponseParser != null){
+					URLtoXML.mpHttpResponseParser();
+					URLtoXML.mpHttpResponseParser = null;
+					Main.hideLoading();
+				}
+				else{		
+					URLtoXML.outTXT = URLtoXML.ParseXMLData(); // генерим конечный плейлист на основании полученных данных
+					Main.hideLoading();
+				}
 			}
 		};
 
 		this.xmlHTTP.setRequestHeader("User-Agent","Opera/9.80 (Windows NT 5.1; U; ru) Presto/2.9.168 Version/11.51");
 		this.xmlHTTP.send();
+	}
+	this.getPageDescr();
+};
+
+URLtoXML.getPageDescr = function() {
+	if (this.pDes[Main.index]=='' && Main.playlist==1){
+		Main.showLoading(1);
+		
+		this.xmlHTTPDescr = null;
+		this.xmlHTTPDescr = new XMLHttpRequest();
+		
+		this.xmlHTTPDescr.open("GET", this.UrlSt[Main.index], true); // ?асинхронно
+
+		this.xmlHTTPDescr.onreadystatechange = function() {
+			if (URLtoXML.xmlHTTPDescr && URLtoXML.xmlHTTPDescr.readyState == 4) {
+				URLtoXML.ParsePageDesctData(); // генерим конечный плейлист на основании полученных данных
+				Main.hideLoading(1);
+			}
+		};
+		this.xmlHTTPDescr.setRequestHeader("User-Agent","Opera/9.80 (Windows NT 5.1; U; ru) Presto/2.9.168 Version/11.51");
+		this.xmlHTTPDescr.send();
+	}
+};
+
+URLtoXML.ParsePageDesctData = function() {
+	var sOut;
+	if (this.xmlHTTPDescr.status == 200){
+		sOut = this.xmlHTTPDescr.responseText;
+		
+//		alert('----------------------------------');
+		var descr;
+		var myRe = new RegExp("\<div class=\"b-info\"\>[\\s\\S]*\<div class=\"item-info\"\>[\\s\\S]*(\<table\>[\\s\\S]*\<\/table\>)[\\n\\s\\r]*\<p( class=\"item-decription short\")?\>([\\s\\S]*)\<\/p\>[\\s\\S]*\<div class=\"b-scroll-to\"\>","igm");
+		if (descr = myRe.exec(sOut)){
+			descr[1] = descr[1].replace("&nbsp;"," ");
+			descr[3] = descr[3].replace(new RegExp("([\\s\\S]*)\<\/p\>([\\s\\S]*)",'igm'),"$1");
+			
+			this.pDes[Main.index] = descr[1]+descr[3];
+			this.pDes[Main.index] = this.pDes[Main.index].replace("&nbsp;"," ");
+			
+			widgetAPI.putInnerHTML(document.getElementById("description"),
+				"<img align='left' style='border-style: solid; border-width:1px; border-color:#3399FF; margin:6px 10px 8px 3px; max-width: 200px; max-height: 200px; border-radius:5px; box-shadow:0 0 13px black;' src='"
+					+ this.ImgDickr[Main.index] + "'/>"
+					+ this.pDes[Main.index]);
+/*			alert(descr[1]);
+			alert('----------------------------------');
+			alert(descr[3]);
+*/
+		}
+//		alert('----------------------------------');
 	}
 };
 
@@ -72,7 +133,6 @@ URLtoXML.ParseXMLData = function() {
 
 	if (this.xmlHTTP.status == 200)// если ответ от сервера корректный
 	{
-		// сразу удаляем переводы строк для удобного поиска
 		sOut = this.xmlHTTP.responseText;
 		
 		var myRe;
@@ -84,7 +144,7 @@ URLtoXML.ParseXMLData = function() {
 					myRe = new RegExp("\<a href=\"(.*)\" class=\"title\"\>(.*)\<\/a\>","ig");
 					if (name = myRe.exec(arr[i])){
 						index++;
-						this.UrlSt[index] = this.prefixURL + name[1] + '?ajax&folder=0';
+						this.UrlSt[index] = Main.prefixURL + name[1] + '?ajax&folder=0';
 						this.sName[index] = name[2];
 
 						myRe = new RegExp("\<a href=\".*\" title=\".*\"\>\<img src=\"(.*)\/5\/(.*)\" border=\"0\"\>\<\/a\>","ig");
@@ -118,34 +178,38 @@ URLtoXML.ParseXMLData = function() {
 				}
 			}else{
 			
-				var arr = sOut.split('<div class="b-poster-section-detail">');
+				var arr = sOut.split('<div class="b-poster-section ');
 				for (var i in arr) {
-					myRe = new RegExp("\<a class=\"subject-link m-themed\" href=\"(.+)\"\>(.+)\<\/a\>","igm");
-					if (name = myRe.exec(arr[i])){
+					myRe = new RegExp("\<a class=\"subject-link\" href=\"(.+)\"\>","igm");
+					if (url = myRe.exec(arr[i])){
 						index++;
-						this.UrlSt[index] = this.prefixURL + name[1] + '?ajax&folder=0';
-						this.sName[index] = name[2];
+						this.UrlSt[index] = Main.prefixURL + url[1];
 						
-						var descr = '';
-						myRe = new RegExp("\<p\>(.*)\<\/p\>","igm");
-						if (vRol = myRe.exec(arr[i])){
-							descr = URLtoXML.DelWords(vRol[1]);
-							descr = URLtoXML.DelTrash(descr);
-							descr = '<span class="vRol">'+descr+'</span><br>';
-						}
-						
-						arr[i] = arr[i].replace(new RegExp("\<br\\s?\/\>(\\s*)?\\r?\\n?","igm"), '<br/>');
-						myRe = new RegExp("\<div class=\"main\"\>\\n.*\\n.*\<img src=\"(.+)\" .* width=.*\/\>\\n.*\\n.*\<div class=\"text\"\>((.|\\n)*)\<\/div\>\\n.*\<\/div\>\\n\<\/div\>","igm");
+						myRe = new RegExp("\<img src=\"(.*)\" alt=\'(.*)\'\/\>","igm");
 						if (img = myRe.exec(arr[i])){
 							this.ImgDickr[index] = img[1];
-							descr += img[2];
-						}else{
-							this.ImgDickr[index] = '';
 						}
-						this.pDes[index] = descr;
+						
+						myRe = new RegExp("\<b class=\"b-poster-info\"\>\\n\\s*((.|\\n)*)\\n\\s+\<b class=\"num \"(.|\\n)*\<\/b\>\\n\\s*\<span\>","igm");
+						quality = '';
+						if (qual = myRe.exec(arr[i])){
+							quality = '<b class="b-poster-info">'+qual[1]+'</b>';
+						}
+						
+						myRe = new RegExp("\<b class=\"subject-link m-full\"\>\\n.*\\n\\s*\<span\>(.*)\<p\>(.*)\<\/p\>\<p\>(.*)\<\/p\>\<\/span\>\\n\\s*\<\/b\>","igm");
+						if (name = myRe.exec(arr[i])){
+							this.sName[index] = name[1]+' '+name[3];
+						}else{
+							myRe = new RegExp("\<b class=\"subject-link m-full\"\>\\n.*\\n\\s*\<span\>(.*)\<p\>(.*)\<\/p\>\<\/span\>\\n\\s*\<\/b\>","igm");
+							if (name = myRe.exec(arr[i])){
+								this.sName[index] = name[1]+' '+name[2];
+							}
+						}
+						
+						this.pDes[index] = '';
 						
 						widgetAPI.putInnerHTML(document.getElementById("title"), this.sName[Main.index]);
-						widgetAPI.putInnerHTML(document.getElementById("bloc" + index), "<img class='blockImage' id='imgst" + index +  "';  src='" + this.ImgDickr[index] + "' />");
+						widgetAPI.putInnerHTML(document.getElementById("bloc" + index), "<img class='blockImage' id='imgst" + index +  "';  src='" + this.ImgDickr[index] + "' />"+quality);
 						document.getElementById("imgst" + Main.index).style.borderColor = "#3399FF"; // активная строка
 					}else{
 						this.UrlSt[index] = '';
@@ -156,6 +220,8 @@ URLtoXML.ParseXMLData = function() {
 				}
 			}
 		}else if (Main.playlist == 1) { 
+			var id;
+			
 			var obj = new Object();
 			obj.names = new Array();
 			obj.urls = new Array();
@@ -203,12 +269,13 @@ URLtoXML.ParseXMLData = function() {
 					var url;
 /*					var isFolder = false;
 					if (fl){ 
-						url=this.prefixURL + fl[1];
+						url=Main.prefixURL + fl[1];
 					}else{ 
 						url=this.xmlHTTP.url + '&folder='+id[2]; 
 						isFolder = true;
 					}
 */
+
 					url=this.xmlHTTP.url + '&folder='+id[2]; 
 					
 					obj.names[obj.names.length] = name;
@@ -238,8 +305,7 @@ URLtoXML.ParseXMLData = function() {
 				if(this.arrVideoExt.indexOf(sres[3])>-1){
 					index++;
 					this.pName[index] = decodeURIComponent(sres[2].replace(new RegExp("\\+","g"),  " "));
-					this.pUrlSt[index] = "http://fs.ua"+sres[1];
-					//this.pUrlSt[index] = sres[1];
+					this.pUrlSt[index] = Main.prefixURL + sres[1];
 					widgetAPI.putInnerHTML(document.getElementById("str" + index), this.pName[index]);
 				}
 			}

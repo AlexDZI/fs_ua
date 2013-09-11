@@ -20,7 +20,7 @@ Favorites.addLine = function() {
 	obj.url = URLtoXML.UrlSt[Main.index];
 	obj.name = URLtoXML.sName[Main.index];
 	obj.img = URLtoXML.ImgDickr[Main.index];
-	obj.descr = URLtoXML.pDes[Main.index];
+//	obj.descr = URLtoXML.pDes[Main.index];
 	
 	var isAdd = true;
 	for(var i=0; i<this.items.length && isAdd; i++)
@@ -58,10 +58,13 @@ Favorites.showItems = function() {
 	if (this.items.length>0)
 		for (var i=Main.page*15; i<this.items.length && i<(Main.page+1)*14+1; i++){
 			
+			if (this.items[i].descr){ delete this.items[i].descr; }
+			this.items[i].url = this.items[i].url.replace("?ajax&folder=0","");
+			
 			URLtoXML.ImgDickr[i+1-Main.page*15] = this.items[i].img;
 			URLtoXML.UrlSt[i+1-Main.page*15] = this.items[i].url;
 			URLtoXML.sName[i+1-Main.page*15] = this.items[i].name;
-			URLtoXML.pDes[i+1-Main.page*15] = this.items[i].descr;
+			URLtoXML.pDes[i+1-Main.page*15] = '';
 			
 			if (URLtoXML.sName[Main.index]){
 				widgetAPI.putInnerHTML(document.getElementById("title"), URLtoXML.sName[Main.index])
