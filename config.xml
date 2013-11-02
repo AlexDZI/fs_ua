@@ -17,10 +17,10 @@
     <videomute>n</videomute>
     <dcont>y</dcont>
     
-	<ThumbIcon itemtype="string">Images/Icons/Fs_ua106x87.png</ThumbIcon>
-	<BigThumbIcon itemtype="string">Images/Icons/Fs_ua115x95.png</BigThumbIcon>
-	<ListIcon itemtype="string">Images/Icons/Fs_ua86x70.png</ListIcon>
-	<BigListIcon itemtype="string">Images/Icons/Fs_ua95x78.png</BigListIcon>
+	<ThumbIcon itemtype="string">images/icons/fs_ua106x87.png</ThumbIcon>
+	<BigThumbIcon itemtype="string">images/icons/fs_ua115x95.png</BigThumbIcon>
+	<ListIcon itemtype="string">images/icons/fs_ua86x70.png</ListIcon>
+	<BigListIcon itemtype="string">images/icons/fs_ua95x78.png</BigListIcon>
 	
     <description></description>
     <width>960</width>
